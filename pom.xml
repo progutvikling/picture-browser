@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sandve.picturebrowser</groupId>
   <artifactId>picture-browser</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <name>Picture Browser</name>
   <description>Picture Browser displays a slideshow of photos from twitter and instagram based on specified hashtags</description>
   <dependencies>
@@ -33,4 +33,19 @@
     	<maven.compiler.source>1.7</maven.compiler.source>
   		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>com.googlecode.flyway</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <user>root</user>
+                  	<password></password>
+                  	<driver>com.mysql.jdbc.Driver</driver>
+                  	<url>jdbc:mysql://localhost:3306/PictureBrowser</url>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
