@@ -16,6 +16,10 @@ import bll.admin.AdminLoginBLL;
 
 
 public class LoginDialog extends JDialog{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -535959533872064544L;
 	JPanel frame, panel, buttons, panel2;
 	JButton ok, avbryt;
 	JLabel brukernavn, passord;
@@ -26,7 +30,7 @@ public class LoginDialog extends JDialog{
         super(parent, "Login", true);
 		setSize(360, 150);
         setResizable(false);
-        //Vist man "krysser ut dialogen" så avslutter programmet
+        //Vist man "krysser ut dialogen" s�� avslutter programmet
         addWindowListener(new WindowAdapter() {
             @Override public void windowClosing(WindowEvent e) {
                 System.exit(0);

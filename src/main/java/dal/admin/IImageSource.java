@@ -1,7 +1,7 @@
 package dal.admin;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IImageSource {
-	public ArrayList<Image> getByKeyword(String keyword);
+	public List<Image> getByKeyword(String keyword, int count);
 }
