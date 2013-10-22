@@ -45,5 +45,15 @@ public class SlideshowController implements SlideshowHandler {
 		return view;
 	}
 
+	@Override
+	public void start() {
+		show.start();
+	}
+
+	@Override
+	public void stop() {
+		show.stop();
+	}
+
 }
 
