@@ -10,6 +10,10 @@ import javax.swing.JPanel;
  */
 public class AdminMainController {
 	public static void main(String[] args) {
+		
+		ImageServer server = new ImageServer();
+		server.start();
+		
 		ManageKeywordsController manageKeywords = new ManageKeywordsController();
 		ManageConfigsController manageConfigs = new ManageConfigsController();
 		

@@ -7,13 +7,10 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import bll.utils.ImageParser;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-
 import dal.admin.IConfigsStore;
 import dal.admin.IImageStore;
 import dal.admin.Image;
@@ -85,7 +82,8 @@ public class ImageServer {
 		private String getJsonRepresentationOfConfig(String name) {
 			IConfigsStore store = StoreFactory.getConfigsStore();
 			String value = store.getConfig(name);
-			String json = "{ \"slideshow_delay:\" " + value + " }";
+			String json = "{\"" + name + "\": \"" + value + "\"}";
+			System.out.println(json);
 			return json;
 		}
 	}

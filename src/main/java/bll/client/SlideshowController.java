@@ -35,10 +35,11 @@ public class SlideshowController implements SlideshowHandler {
 
 	@Override
 	public int getDelay() {
-		String json = Fetcher.fetchConfigsFromServer();
-		Map<String, String> configs = ConfigsParser.getMapFromJson(json);
-		String delay = configs.get("slideshow_delay");
-		return Integer.parseInt(delay);
+		/*String json = Fetcher.fetchConfigsFromServer();
+		Map<String, Object> configs = ConfigsParser.getMapFromJson(json);
+		String delay = (String) configs.get("slideshow_delay");
+		return Integer.parseInt(delay);*/
+		return 3;
 	}
 	
 	public SlideshowPanel getView() {

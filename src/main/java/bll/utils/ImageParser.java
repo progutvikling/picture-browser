@@ -33,13 +33,13 @@ public class ImageParser {
 		return json;
 	}
 
-	public static LinkedList<Image> getImageFromJson(String json) {
+	public static ArrayList<Image> getImageFromJson(String json) {
 		if(!(json.equals("")) && json != null) {
 			Gson gson = new GsonBuilder()
 			.setDateFormat(DATE_FORMAT).create();
 
 			Image[] img = gson.fromJson(json, Image[].class);
-			return new LinkedList<Image>(Arrays.asList(img));
+			return new ArrayList<Image>(Arrays.asList(img));
 		} 
 		else
 			return null;

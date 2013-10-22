@@ -3,6 +3,7 @@ package bll.client;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,31 +18,31 @@ public class RecentImages {
 
 	private Map<Integer, BufferedImage> cache;
 	private List<Image> images;
-	private ListIterator<Image> iter;
+	private int pos = 0;
 
 	public RecentImages() {
 		cache = new HashMap<Integer, BufferedImage>();
 		images = fetchImages();
-		iter = images.listIterator();
 		cacheImages();
 	}
 
 	public BufferedImage getNext() {
-		if(iter.hasNext()) {
-			Image img = iter.next();
-			if(cache.containsKey(img.getID()))
-				return cache.get(img.getID());
-			else {
-				BufferedImage newImg = loadImage(img.getUrl());
-				cache.put(img.getID(), newImg);
-				return newImg;
-			}
+		BufferedImage nextImage;
+		if(cache.containsKey(images.get(pos).getID()))
+			nextImage = cache.get(images.get(pos).getID());
+		else {
+			BufferedImage newImg = loadImage(images.get(pos).getUrl());
+			cache.put(images.get(pos).getID(), newImg);
+			nextImage = newImg;
 		}
+		if(pos < images.size()-1)
+			pos++;
 		else
-			return null;
+			pos = 0;
+		return nextImage;
 	}
 
-	private LinkedList<Image> fetchImages() {
+	private ArrayList<Image> fetchImages() {
 		String json = Fetcher.fetchImagesFromServer();
 		return ImageParser.getImageFromJson(json);
 	}
