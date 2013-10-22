@@ -14,18 +14,26 @@ import java.net.URLConnection;
  *
  */
 
-public class ImageClient {
+public class Fetcher {
 	
 	public static String fetchImagesFromServer() {
+		return httpGet("http://localhost:8000/images");
+	}
+	
+	public static String fetchConfigsFromServer() {
+		return httpGet("http://localhost:8000/configs");
+	}
+	
+	private static String httpGet(String urlString) {
 		URL url = null;
 		URLConnection conn = null;
 		String response = "";
 		try {
-			url = new URL("http://localhost:8000/images");
+			url = new URL(urlString);
 			conn = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			response = in.readLine();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return response;

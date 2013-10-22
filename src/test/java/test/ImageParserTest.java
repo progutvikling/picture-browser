@@ -3,6 +3,8 @@ package test;
 import static org.junit.Assert.*;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import org.junit.Test;
 
 import bll.utils.ImageParser;
@@ -64,7 +66,7 @@ public class ImageParserTest {
 				",{\"url\":\"url2\",\"id\":2,\"description\":" +
 						"\"description2\",\"createdTime\":\"1970-01-01 01:00:01\"}]";
 		
-		ArrayList<Image> images = ImageParser.getImageFromJson(json);
+		LinkedList<Image> images = ImageParser.getImageFromJson(json);
 		Image parsedImg1 = images.get(0);
 		Image parsedImg2 = images.get(1);
 		

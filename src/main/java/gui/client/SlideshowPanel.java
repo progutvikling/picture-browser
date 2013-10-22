@@ -1,5 +1,7 @@
 package gui.client;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -12,17 +14,20 @@ import javax.swing.JPanel;
  * @author Stian Sandve <stian@sandve.org>
  */
 
-public class SlideshowPanel extends JPanel {
+public class SlideshowPanel extends JPanel implements Canvas {
 
 	private static final long serialVersionUID = -3943809441036747592L;
 	
 	private BufferedImage bi;
 	private int marginX = 0;
 	private int marginY = 0;
+	private Dimension screenSize;
 
 	public SlideshowPanel() {
 		//Sets the panels preferred size to be the same as the screens size
-		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
+		this.setPreferredSize(screenSize);
+		this.setBackground(Color.BLACK);
 	}
 
 	/**
@@ -50,15 +55,11 @@ public class SlideshowPanel extends JPanel {
 		setMarginY();
 	}
 	
-	private int setMarginX() {
-		int panelWidth = this.getWidth();
-		int marginX = (panelWidth-bi.getWidth())/2;
-		return marginX;
+	private void setMarginX() {
+		marginX = ((screenSize.width)-(bi.getWidth()))/2;
 	}
 	
-	private int setMarginY() {
-		int panelHeight = this.getHeight();
-		int marginY = (panelHeight-bi.getHeight())/2;
-		return marginY;
+	private void setMarginY() {
+		marginY = ((screenSize.height)-(bi.getHeight()))/2;
 	}
 }
