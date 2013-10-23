@@ -2,7 +2,6 @@ package bll.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dal.admin.Image;

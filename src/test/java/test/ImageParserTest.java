@@ -3,10 +3,7 @@ package test;
 import static org.junit.Assert.*;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.LinkedList;
-
 import org.junit.Test;
-
 import bll.utils.ImageParser;
 import dal.admin.Image;
 

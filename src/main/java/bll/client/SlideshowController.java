@@ -1,11 +1,6 @@
 package bll.client;
 
 import java.awt.image.BufferedImage;
-import java.util.Map;
-
-import bll.utils.ConfigsParser;
-
-import dal.client.Fetcher;
 import gui.client.Slideshow;
 import gui.client.SlideshowHandler;
 import gui.client.SlideshowPanel;
