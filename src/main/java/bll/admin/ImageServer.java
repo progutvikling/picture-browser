@@ -83,7 +83,6 @@ public class ImageServer {
 			IConfigsStore store = StoreFactory.getConfigsStore();
 			String value = store.getConfig(name);
 			String json = "{\"" + name + "\": \"" + value + "\"}";
-			System.out.println(json);
 			return json;
 		}
 	}

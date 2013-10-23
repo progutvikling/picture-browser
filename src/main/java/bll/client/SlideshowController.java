@@ -1,6 +1,11 @@
 package bll.client;
 
 import java.awt.image.BufferedImage;
+import java.util.Map;
+
+import bll.utils.ConfigsParser;
+
+import dal.client.Fetcher;
 import gui.client.Slideshow;
 import gui.client.SlideshowHandler;
 import gui.client.SlideshowPanel;
@@ -30,11 +35,10 @@ public class SlideshowController implements SlideshowHandler {
 
 	@Override
 	public int getDelay() {
-		/*String json = Fetcher.fetchConfigsFromServer();
+		String json = Fetcher.fetchConfigsFromServer();
 		Map<String, Object> configs = ConfigsParser.getMapFromJson(json);
 		String delay = (String) configs.get("slideshow_delay");
-		return Integer.parseInt(delay);*/
-		return 3;
+		return Integer.parseInt(delay);
 	}
 	
 	public SlideshowPanel getView() {
@@ -52,4 +56,3 @@ public class SlideshowController implements SlideshowHandler {
 	}
 
 }
-
