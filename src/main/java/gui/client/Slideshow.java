@@ -1,12 +1,11 @@
 package gui.client;
 
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Slideshow extends TimerTask {
+public class Slideshow {
 	
 	Canvas canvas;
 	SlideshowHandler handler;
@@ -31,11 +30,6 @@ public class Slideshow extends TimerTask {
 	
 	public void stop() {
 		exec.shutdown();
-	}
-
-	@Override
-	public void run() {
-		canvas.setImage(handler.next());
 	}
 	
 }
