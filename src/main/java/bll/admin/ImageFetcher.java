@@ -1,4 +1,5 @@
 package bll.admin;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,8 +36,6 @@ public class ImageFetcher {
 		System.out.println("(" + DATE_FORMAT.format(new Date()) + ") " + message);
 	}
 
-
-
 	/**
 	 * Application main
 	 */
@@ -58,10 +57,12 @@ public class ImageFetcher {
 		IKeywordsStore keywordsStore = StoreFactory.getKeywordsStore();
 		List<String> keywords = keywordsStore.getKeywords();
 		
-		try {
-			while (true) {
-				
+		while (true) {
+
+			String sourceClass = "";
+			try {
 				for (IImageSource source : sources) {
+					sourceClass = source.getClass().getName();
 					log("Starting to fetch from " + source.getClass().getName());
 					
 					for (String keyword : keywords) {
@@ -74,9 +75,14 @@ public class ImageFetcher {
 					}
 				}
 
+			} catch (Exception e) {
+				log("Could not fetch from `" + sourceClass + "`. Trying again in " + INTERVAL + " minutes.");
+			}
+
+			try {
 				log("Going to sleep for " + INTERVAL + " minutes. (abort with Ctrl+c)");
 				Thread.sleep(INTERVAL * 60 * 1000);
-			}
-		} catch (InterruptedException e) {}
+			} catch (InterruptedException e) {}
+		}
 	}
 }
