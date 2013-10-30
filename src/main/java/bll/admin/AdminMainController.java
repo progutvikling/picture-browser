@@ -1,7 +1,9 @@
 package bll.admin;
 
 import gui.admin.MainWindow;
+
 import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 /**
@@ -16,10 +18,12 @@ public class AdminMainController {
 		
 		ManageKeywordsController manageKeywords = new ManageKeywordsController();
 		ManageConfigsController manageConfigs = new ManageConfigsController();
+		BlockingPictures blockingpictures = new BlockingPictures();
 		
 		ArrayList<JPanel> panels = new ArrayList<JPanel>();
 		panels.add(manageKeywords.getView());
 		panels.add(manageConfigs.getView());
+		panels.add(blockingpictures);
 		
 		MainWindow wnd = new MainWindow(panels);
 		wnd.setVisible(true);
