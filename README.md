@@ -21,9 +21,21 @@ Komme i gang
 
 1. Klon dette prosjektet til en mappe på datamaskinen din.
 2. Importer prosjektet i Eclipse. *NB: Ikke huk av for "copy project into workspace"*
-2. Installer mysql på localhost, med brukeren `root` uten passord.
-   * Opprett databasen `PictureBrowser` og alle tabellene **ved å kjøre alle SQL-scriptene** i mappen `sql-scripts` i rekkefølge etter filnavnene.
-   * Viss du må ha brukernavn og passord på databasen, må du redigere `src/dal/admin/StoreFactory.java` med andre connection settings.
+3. Installer mysql på localhost, med brukeren `root` uten passord.
+   * Installer alle migrations med å skrive:
+
+     ```bash
+	 mvn compile
+	 mvn flyway:migrate
+	 ```
+
+	 (Men du må ha installert maven for kommandolinja. På mac kan du
+     gjøre dette med `homebrew`. Installer først homebrew med:
+	 `ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"`
+	 og installer deretter maven med `brew maven`.)
+
+4. Hver gang det har blitt lagt til nye SQL-filer i migrations-mappa
+   må du kjøre steg 3 igjen.
 
 
 ### For å kjøre forskjellige deler av programmet:   
