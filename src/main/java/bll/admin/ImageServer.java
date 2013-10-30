@@ -7,10 +7,13 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import bll.utils.ImageParser;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
 import dal.admin.IConfigsStore;
 import dal.admin.IImageStore;
 import dal.admin.Image;
@@ -26,6 +29,7 @@ import dal.admin.StoreFactory;
  *
  */
 
+@SuppressWarnings("restriction")
 public class ImageServer {
 
 	private static final int PORT = 8000;

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 public class StoreFactory {
 	/* settings */
-	public static final String DB_URL = "jdbc:mysql://localhost/PictureBrowser";
-	public static final String DB_USERNAME = "root";
-	public static final String DB_PASSWORD = "";
+	public static final String DB_URL = System.getenv("MYSQL_URL_MYDB") != null ? System.getenv("MYSQL_URL_MYDB") : "jdbc:mysql://localhost/PictureBrowser";
+	public static final String DB_USERNAME = System.getenv("MYSQL_USERNAME_MYDB") != null ? System.getenv("MYSQL_USERNAME_MYDB") : "root";
+	public static final String DB_PASSWORD = System.getenv("MYSQL_PASSWORD_MYDB") != null ? System.getenv("MYSQL_PASSWORD_MYDB") : "";
 	/* end settings */
 
 
