@@ -7,6 +7,6 @@
 -- will be inserted.
 --
 
-ALTER TABLE `PictureBrowser`.`configs` DROP COLUMN `id` , CHANGE COLUMN `name` `name` VARCHAR(64) NOT NULL DEFAULT 'default'  
+ALTER TABLE `configs` DROP COLUMN `id` , CHANGE COLUMN `name` `name` VARCHAR(64) NOT NULL DEFAULT 'default'  
 , DROP PRIMARY KEY 
 , ADD PRIMARY KEY (`name`) ;
