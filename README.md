@@ -1,6 +1,8 @@
 Picture Browser
 ===============
 
+[![Build Status](https://asjohannsson.ci.cloudbees.com/buildStatus/icon?job=Prosjekt)](https://asjohannsson.ci.cloudbees.com/job/Prosjekt/)
+
 Arbeidsoppgave i faget Programvareutvikling på UiS Data Bachelor 2013.
 Gruppe 1
 

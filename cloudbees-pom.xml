@@ -42,6 +42,7 @@
         <configuration>
           <user>progutvik</user>
           <password>progutvik</password>
+	  <driver>com.mysql.jdbc.Driver</driver>
           <url>jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/picture-browser</url>
 	  <schemas>
 	    <schema>picture-browser</schema>

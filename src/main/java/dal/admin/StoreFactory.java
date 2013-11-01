@@ -7,9 +7,20 @@ import java.sql.SQLException;
 
 public class StoreFactory {
 	/* settings */
-	public static final String DB_URL = System.getenv("MYSQL_URL_MYDB") != null ? System.getenv("MYSQL_URL_MYDB") : "jdbc:mysql://localhost/PictureBrowser";
-	public static final String DB_USERNAME = System.getenv("MYSQL_USERNAME_MYDB") != null ? System.getenv("MYSQL_USERNAME_MYDB") : "root";
-	public static final String DB_PASSWORD = System.getenv("MYSQL_PASSWORD_MYDB") != null ? System.getenv("MYSQL_PASSWORD_MYDB") : "";
+	public static final String DB_URL =
+		System.getenv("MYSQL_URL") != null ?
+		System.getenv("MYSQL_URL") :
+		"jdbc:mysql://localhost/PictureBrowser";
+
+	public static final String DB_USERNAME =
+		System.getenv("MYSQL_USERNAME") != null ?
+		System.getenv("MYSQL_USERNAME") :
+		"root";
+
+	public static final String DB_PASSWORD =
+		System.getenv("MYSQL_PASSWORD") != null ?
+		System.getenv("MYSQL_PASSWORD") :
+		"";
 	/* end settings */
 
 
@@ -19,6 +30,8 @@ public class StoreFactory {
 
 	/** Returns the connection if it is alive, or creates a new one. */
 	public static Connection getConnection() {
+		System.out.println("Setting up connection " + StoreFactory.DB_URL);
+
 		try {
 			if (StoreFactory.conn != null && StoreFactory.conn.isValid(1)) {
 				return conn;
