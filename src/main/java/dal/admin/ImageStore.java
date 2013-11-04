@@ -29,7 +29,7 @@ public class ImageStore implements IImageStore {
 				" VALUES (?, ?, ?, ?);");
 
 			statement.setString(1, img.getUrl());
-			statement.setInt(2, img.getID());
+			statement.setLong(2, img.getID());
 			statement.setString(3, img.getDescription());
 			statement.setDate(4, img.getCreatedTime());
 			return statement.executeUpdate() == 1;
@@ -49,18 +49,20 @@ public class ImageStore implements IImageStore {
 		
 		try {
 			PreparedStatement statement = conn.prepareStatement(
-				"SELECT url, external_id, description, created_time "+
+				"SELECT id, url, external_id, description, created_time "+
 				" FROM images ORDER BY id DESC LIMIT ?;");
 			statement.setInt(1, numberOfRows);
 
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				images.add(new Image(
-					result.getString("url"),
-					result.getInt("external_id"),
-					result.getString("description"),
-					result.getDate("created_time")
-				));
+				Image img = new Image(
+						result.getString("url"),
+						result.getLong("external_id"),
+						result.getString("description"),
+						result.getDate("created_time")
+				);
+				img.setInternalId(result.getInt("id"));
+				images.add(img);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
