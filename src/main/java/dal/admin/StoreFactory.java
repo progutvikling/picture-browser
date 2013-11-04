@@ -30,8 +30,6 @@ public class StoreFactory {
 
 	/** Returns the connection if it is alive, or creates a new one. */
 	public static Connection getConnection() {
-		System.out.println("Setting up connection " + StoreFactory.DB_URL);
-
 		try {
 			if (StoreFactory.conn != null && StoreFactory.conn.isValid(1)) {
 				return conn;

@@ -36,6 +36,9 @@ public class LoginDialog extends JDialog{
                 System.exit(0);
             }
         });
+
+		LoginAction loginAction = new LoginAction();
+
         //Legger til labels og tekstfields for logininputen.
 		frame = new JPanel();
 		panel = new JPanel(new GridBagLayout());
@@ -58,6 +61,7 @@ public class LoginDialog extends JDialog{
 		cs.gridwidth = 1;
 		panel2.add(passord, cs);
 		passordinput = new JPasswordField(20);
+		passordinputn.addActionListener(loginAction);
 		cs.gridx = 1;
 		cs.gridy = 1;
 		cs.gridwidth = 2;
@@ -66,20 +70,7 @@ public class LoginDialog extends JDialog{
 		//Lagger knappene og logikken deres.
 		ok = new JButton("Login");
 		//Vist bruker trykker login, sjekker programmet om input var korrekt.
-		ok.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				String bruker = brukernavninput.getText();
-				String pass = new String(passordinput.getPassword());
-				AdminLoginBLL login = new AdminLoginBLL();
-				if(login.checkusernameandpassword(pass, bruker)){
-					dispose();
-				}
-				else{
-					JOptionPane.showMessageDialog(frame, "Ugyldigt brukernavn eller passord");
-				}
-			}
-		});
+		ok.addActionListener(loginAction);
 		avbryt = new JButton("Cancel");
 		//Avslutter programmet
 		avbryt.addActionListener(new ActionListener() {
@@ -100,5 +91,20 @@ public class LoginDialog extends JDialog{
 		frame.add(buttons);
 		add(frame);
         setLocationRelativeTo(parent);
+	}
+
+	public class LoginAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			String bruker = brukernavninput.getText();
+			String pass = new String(passordinput.getPassword());
+			AdminLoginBLL login = new AdminLoginBLL();
+			if(login.checkusernameandpassword(pass, bruker)){
+				dispose();
+			}
+			else{
+				JOptionPane.showMessageDialog(frame, "Ugyldigt brukernavn eller passord");
+			}
+		}
 	}
 }
