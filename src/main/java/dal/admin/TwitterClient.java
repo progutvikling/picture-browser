@@ -17,6 +17,7 @@ import sun.misc.BASE64Encoder;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+@SuppressWarnings("restriction")
 public class TwitterClient implements ITwitterClient {
 	private static String TWITTER_CONSUMER_KEY = "CvOYJ2qiCZOmw4ZjII57A";
 	private static String TWITTER_CONSUMER_SECRET = "fTSpbBcm5pNJGJ935rblVsOvbBk8F55pnIhXF0mQ1Y";
