@@ -50,7 +50,7 @@ public class ImageParserTest {
 		Image img = new Image("url", 1, "description", sqlDate);
 		String json = ImageParser.getJsonFromImage(img);
 		assertEquals(json, "{\"url\":\"url\",\"id\":1,\"description\":" +
-				"\"description\",\"createdTime\":\"" + dateTime + "\"}");
+				"\"description\",\"createdTime\":\"" + dateTime + "\",\"internalId\":" + 0 + "}");
 	}
 	
 	@Test
@@ -65,9 +65,9 @@ public class ImageParserTest {
 		
 		String json = ImageParser.getJsonFromImage(images);
 		assertEquals(json, "[{\"url\":\"url1\",\"id\":1,\"description\":" +
-				"\"description1\",\"createdTime\":\"" + dateTime1 + "\"}" + 
+				"\"description1\",\"createdTime\":\"" + dateTime1 + "\",\"internalId\":" + 0 + "}" + 
 				",{\"url\":\"url2\",\"id\":2,\"description\":" +
-						"\"description2\",\"createdTime\":\"" + dateTime2 + "\"}]");
+						"\"description2\",\"createdTime\":\"" + dateTime2 + "\",\"internalId\":" + 0 + "}]");
 	}
 	
 	@Test

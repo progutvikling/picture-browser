@@ -7,19 +7,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.imageio.ImageIO;
+
 import bll.utils.ImageParser;
 import dal.admin.Image;
 import dal.client.Fetcher;
 
 public class ImageLoader {
 
-	private Map<Integer, BufferedImage> cache;
+	private Map<Long, BufferedImage> cache;
 	private List<Image> images;
 	private int pos = 0;
 
 	public ImageLoader() {
-		cache = new HashMap<Integer, BufferedImage>();
+		cache = new HashMap<Long, BufferedImage>();
 		images = fetchImages();
 		cacheImages();
 	}

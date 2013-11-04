@@ -9,6 +9,8 @@ import dal.admin.IImageSource;
 import dal.admin.IImageStore;
 import dal.admin.IKeywordsStore;
 import dal.admin.Image;
+import dal.admin.InstagramClient;
+import dal.admin.InstagramSource;
 import dal.admin.StoreFactory;
 import dal.admin.TwitterClient;
 import dal.admin.TwitterSource;
@@ -51,7 +53,7 @@ public class ImageFetcher {
 
 		List<IImageSource> sources = new ArrayList<IImageSource>();
 		sources.add(new TwitterSource(new TwitterClient()));
-		// sources.add(new InstagramSource(new InstagramClient()));   // <-- To be implemented...
+		sources.add(new InstagramSource(new InstagramClient()));
 
 		IImageStore imageStore = StoreFactory.getImageStore();
 		IKeywordsStore keywordsStore = StoreFactory.getKeywordsStore();
@@ -76,6 +78,7 @@ public class ImageFetcher {
 				}
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				log("Could not fetch from `" + sourceClass + "`. Trying again in " + INTERVAL + " minutes.");
 			}
 
