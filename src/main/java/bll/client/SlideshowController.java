@@ -13,13 +13,13 @@ import gui.client.SlideshowPanel;
 public class SlideshowController implements SlideshowHandler {
 	
 	private SlideshowPanel view;
-	private RecentImages ri;
+	private ImageLoader ri;
 	private Slideshow show;
 	
 	public SlideshowController() {
 		view = new SlideshowPanel();
 		show = new Slideshow(view, this);
-		ri = new RecentImages();
+		ri = new ImageLoader();
 	}
 
 	@Override

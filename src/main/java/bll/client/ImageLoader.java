@@ -12,13 +12,13 @@ import bll.utils.ImageParser;
 import dal.admin.Image;
 import dal.client.Fetcher;
 
-public class RecentImages {
+public class ImageLoader {
 
 	private Map<Integer, BufferedImage> cache;
 	private List<Image> images;
 	private int pos = 0;
 
-	public RecentImages() {
+	public ImageLoader() {
 		cache = new HashMap<Integer, BufferedImage>();
 		images = fetchImages();
 		cacheImages();
