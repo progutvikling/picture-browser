@@ -1,7 +1,9 @@
 package gui.admin;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -18,9 +20,10 @@ public class MainWindow extends JFrame {
 		Frame[] frames = getFrames();
 		LoginDialog loginDlg = new LoginDialog(frames[0]);
 		loginDlg.setVisible(true);
-		this.setSize(600, 600);
-		this.setTitle("Administrasjon for bildeviser");
-		this.setLayout(new BorderLayout());
+		setSize(600, 600);
+		setTitle("Administrasjon for bildeviser");
+		setLayout(new BorderLayout());
+		centerFrame();
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -29,5 +32,14 @@ public class MainWindow extends JFrame {
 		}
 
 		this.add(tabbedPane, BorderLayout.CENTER);
+	}
+
+	/*
+	 * Centers the frame
+	 */
+	public void centerFrame() {
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2,
+						 dim.height/2-this.getSize().height/2);
 	}
 }

@@ -61,7 +61,7 @@ public class LoginDialog extends JDialog{
 		cs.gridwidth = 1;
 		panel2.add(passord, cs);
 		passordinput = new JPasswordField(20);
-		passordinputn.addActionListener(loginAction);
+		passordinput.addActionListener(loginAction);
 		cs.gridx = 1;
 		cs.gridy = 1;
 		cs.gridwidth = 2;
