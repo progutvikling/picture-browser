@@ -26,9 +26,8 @@ public class RecentImages {
 
 	public BufferedImage getNext() {
 		BufferedImage nextImage = null;
-		if(!cache.isEmpty()) {
-			if(cache.containsKey(images.get(pos).getID()))
-				nextImage = cache.get(images.get(pos).getID());
+		if(!cache.isEmpty() && cache.containsKey(images.get(pos).getID())) {
+			nextImage = cache.get(images.get(pos).getID());
 		}
 		else {
 			BufferedImage newImg = loadImage(images.get(pos).getUrl());
