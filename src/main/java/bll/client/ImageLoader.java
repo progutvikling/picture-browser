@@ -34,7 +34,6 @@ public class ImageLoader {
 
 	private ArrayList<Image> fetchImages() {
 		String json = Fetcher.fetchImagesFromServer();
-		System.out.println(json);
 		return ImageParser.getImageFromJson(json);
 	}
 

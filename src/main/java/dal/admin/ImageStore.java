@@ -24,7 +24,7 @@ public class ImageStore implements IImageStore {
 	public synchronized boolean insert(Image img) {
 		try {
 			PreparedStatement statement = conn.prepareStatement(
-				"INSERT INTO images " +
+				"INSERT IGNORE INTO images " +
 				" (url, external_id, description, created_time)" +
 				" VALUES (?, ?, ?, ?);");
 
