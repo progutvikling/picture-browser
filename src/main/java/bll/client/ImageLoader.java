@@ -14,17 +14,38 @@ public class ImageLoader {
 
 	private List<Image> images;
 	private int pos = 0;
+	private BufferedImage nextImage = null;
 
 	public ImageLoader() {
 		images = fetchImages();
 	}
 
 	public BufferedImage getNext() {
-		BufferedImage nextImage = loadImage(images.get(pos).getUrl());
+		BufferedImage currentImage;
+		
+		if(pos == 0)
+			currentImage = loadImage(images.get(pos).getUrl());
+		else if(nextImage == null) {
+			incrementPos();
+			currentImage = loadImage(images.get(pos).getUrl());
+		}
+		else
+			currentImage = nextImage;
+		
 		incrementPos();
-		return nextImage;
+		loadNextImage();
+		
+		return currentImage;
 	}
 	
+	private void loadNextImage() {
+		new Thread(new Runnable() {
+		    @Override public void run() {
+		    	nextImage = loadImage(images.get(pos).getUrl());
+		    }
+		}).start();
+	}
+
 	private void incrementPos() {
 		if(pos < images.size()-1)
 			pos++;
@@ -42,10 +63,8 @@ public class ImageLoader {
 		try {
 			URL url = new URL(urlString);
 			bi = ImageIO.read(url);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			return null;
 		}
 		return bi;
 	}

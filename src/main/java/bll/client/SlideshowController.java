@@ -13,18 +13,18 @@ import gui.client.SlideshowPanel;
 public class SlideshowController implements SlideshowHandler {
 	
 	private SlideshowPanel view;
-	private ImageLoader ri;
+	private ImageLoader il;
 	private Slideshow show;
 	
 	public SlideshowController() {
 		view = new SlideshowPanel();
 		show = new Slideshow(view, this);
-		ri = new ImageLoader();
+		il = new ImageLoader();
 	}
 
 	@Override
 	public BufferedImage next() {
-		return ri.getNext();
+		return il.getNext();
 	}
 
 	@Override
