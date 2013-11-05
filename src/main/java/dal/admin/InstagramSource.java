@@ -1,6 +1,7 @@
 package dal.admin;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class InstagramSource implements IImageSource {
 				String url = image.getAsJsonObject().get("url").getAsString();
 				String description = picture.get("caption").getAsJsonObject().get("text").getAsString();
 
-				Image img = new Image(url, id, description, new Date(createdTime*1000));
+				Image img = new Image(url, id, description, new Date((long)createdTime*1000));
 				images.add(img);
 			}
 		}

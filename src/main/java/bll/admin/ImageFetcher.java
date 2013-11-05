@@ -2,7 +2,7 @@ package bll.admin;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import dal.admin.IImageSource;
@@ -35,7 +35,7 @@ public class ImageFetcher {
 	 * Log output
 	 */
 	protected void log(String message) {
-		System.out.println("(" + DATE_FORMAT.format(new Date()) + ") " + message);
+		System.out.println("(" + DATE_FORMAT.format(new java.util.Date()) + ") " + message);
 	}
 
 	/**

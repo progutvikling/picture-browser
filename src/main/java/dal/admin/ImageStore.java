@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -16,9 +17,11 @@ import java.util.ArrayList;
 
 public class ImageStore implements IImageStore {
 	protected Connection conn;
+	SimpleDateFormat dateformat;
 
 	public ImageStore(Connection conn) {
 		this.conn = conn;
+		this.dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
 
 	public synchronized boolean insert(Image img) {
@@ -31,7 +34,7 @@ public class ImageStore implements IImageStore {
 			statement.setString(1, img.getUrl());
 			statement.setLong(2, img.getID());
 			statement.setString(3, StringUtils.removeEmojis(img.getDescription()));
-			statement.setDate(4, img.getCreatedTime());
+			statement.setString(4, dateformat.format(img.getCreatedTime()));
 			return statement.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
