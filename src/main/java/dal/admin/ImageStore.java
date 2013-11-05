@@ -30,8 +30,7 @@ public class ImageStore implements IImageStore {
 
 			statement.setString(1, img.getUrl());
 			statement.setLong(2, img.getID());
-			//need to be able to insert img.getDescription()
-			statement.setString(3, "emoji bug");
+			statement.setString(3, StringUtils.removeEmojis(img.getDescription()));
 			statement.setDate(4, img.getCreatedTime());
 			return statement.executeUpdate() == 1;
 		} catch (SQLException e) {
