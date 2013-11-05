@@ -33,7 +33,7 @@ public class ImageParser {
 	}
 
 	public static ArrayList<Image> getImageFromJson(String json) {
-		if(!(json.equals("")) && json != null) {
+		if(json != null && !(json.equals(""))) {
 			Gson gson = new GsonBuilder()
 			.setDateFormat(DATE_FORMAT).create();
 
