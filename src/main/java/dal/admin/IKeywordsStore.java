@@ -19,4 +19,9 @@ public interface IKeywordsStore {
 	 * Deletes a keyword and returns true if success.
 	 */
 	public boolean deleteKeyword(String keyword);
+	
+	/**
+	 * Deletes a keyword from images table and returns true if success.
+	 */
+	public boolean deleteKeywordFromImages(String keyword);
 }
