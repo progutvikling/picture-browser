@@ -62,11 +62,12 @@ public class ImageFetcher {
 		while (true) {
 
 			String sourceClass = "";
-			try {
+			
 				for (IImageSource source : sources) {
 					sourceClass = source.getClass().getName();
 					log("Starting to fetch from " + source.getClass().getName());
 					
+					try {
 					for (String keyword : keywords) {
 						log("Fetching for keyword `" + keyword + "`...");
 						List<Image> images = source.getByKeyword(keyword, 100);
@@ -75,12 +76,13 @@ public class ImageFetcher {
 							imageStore.insert(image);
 						}
 					}
-				}
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				log("Could not fetch from `" + sourceClass + "`. Trying again in " + INTERVAL + " minutes.");
-			}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						log("Could not fetch from `" + sourceClass + "`. Trying again in " + INTERVAL + " minutes.");
+					}
+				}
 
 			try {
 				log("Going to sleep for " + INTERVAL + " minutes. (abort with Ctrl+c)");
