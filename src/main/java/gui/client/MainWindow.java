@@ -11,13 +11,14 @@ import javax.swing.JPanel;
 public class MainWindow extends JFrame {
 
 	private static GraphicsDevice device = GraphicsEnvironment
-			.getLocalGraphicsEnvironment().getScreenDevices()[0];
+			.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static final long serialVersionUID = -4902720969305740099L;
 
 	public MainWindow(JPanel panel) {
 		this.setTitle("Picture Browser");
 		this.setLayout(new BorderLayout());
 		this.add(panel, BorderLayout.CENTER);
+		this.addKeyListener(new ExitListener());
 	}
 
 	public void startFullscreen ()
@@ -27,7 +28,7 @@ public class MainWindow extends JFrame {
 			throw new UnsupportedOperationException ("Fullscreen mode is unsupported.");
 		}
 
-		this.addKeyListener(new ExitListener());
+		
 
 		try {
 			device.setFullScreenWindow (this);
