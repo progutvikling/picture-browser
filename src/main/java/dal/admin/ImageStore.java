@@ -55,7 +55,7 @@ public class ImageStore implements IImageStore {
 			PreparedStatement statement = conn.prepareStatement(
 				"SELECT id, url, external_id, description, created_time" +
 				" FROM images WHERE blocked='0'"+
-				" ORDER BY id DESC LIMIT ?;");
+				" ORDER BY created_time DESC LIMIT ?;");
 			statement.setInt(1, numberOfRows);
 			
 			ResultSet result = statement.executeQuery();
