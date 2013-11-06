@@ -55,7 +55,4 @@ public class StoreFactory {
 	public static IConfigsStore getConfigsStore() {
 		return new ConfigsStore(StoreFactory.getConnection());
 	}
-	public static IStoreBlocking getStoreBlocking(){
-		return new StoreBlocking(StoreFactory.getConnection());
-	}
 }

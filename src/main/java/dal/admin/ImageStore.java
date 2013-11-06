@@ -8,10 +8,11 @@ import java.util.ArrayList;
 
 /**
  * 
- * This class is responsible for inserting and retrieving
- * images from our database
- * @author Stian Sandve
- *
+ * This class is responsible for inserting and retrieving images from our
+ * database
+ * 
+ * @author Stian Sandve / Morten Wærsland
+ * 
  */
 
 public class ImageStore implements IImageStore {
@@ -23,10 +24,10 @@ public class ImageStore implements IImageStore {
 
 	public synchronized boolean insert(Image img) {
 		try {
-			PreparedStatement statement = conn.prepareStatement(
-				"INSERT INTO images " +
-				" (url, external_id, description, created_time)" +
-				" VALUES (?, ?, ?, ?);");
+			PreparedStatement statement = conn
+					.prepareStatement("INSERT INTO images "
+							+ " (url, external_id, description, created_time)"
+							+ " VALUES (?, ?, ?, ?);");
 
 			statement.setString(1, img.getUrl());
 			statement.setInt(2, img.getID());
@@ -38,33 +39,58 @@ public class ImageStore implements IImageStore {
 			return false;
 		}
 	}
-	
-	
+
 	public synchronized ArrayList<Image> getLast(int numberOfRows) {
-		if(numberOfRows < 0) {
+		if (numberOfRows < 0) {
 			throw new IllegalArgumentException();
 		}
 
 		ArrayList<Image> images = new ArrayList<Image>();
-		
+
 		try {
-			PreparedStatement statement = conn.prepareStatement(
-				"SELECT url, external_id, description, created_time "+
-				" FROM images ORDER BY id DESC LIMIT ?;");
+			PreparedStatement statement = conn
+					.prepareStatement("SELECT url, external_id, description, created_time "
+							+ " FROM images ORDER BY id DESC LIMIT ?;");
 			statement.setInt(1, numberOfRows);
 
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				images.add(new Image(
-					result.getString("url"),
-					result.getInt("external_id"),
-					result.getString("description"),
-					result.getDate("created_time")
-				));
+				images.add(new Image(result.getString("url"), result
+						.getInt("external_id"),
+						result.getString("description"), result
+								.getDate("created_time")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return images;
 	}
+
+	public synchronized boolean block(int external_id) {
+		// int external_id = img.getID();
+		try {
+			PreparedStatement statement = conn
+					.prepareStatement("UPDATE images SET blocked=true WHERE external_id="
+							+ external_id + ";");
+			return statement.executeUpdate() == 1;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public synchronized boolean unBlock(int external_id) {
+		try {
+			PreparedStatement statement = conn
+					.prepareStatement("UPDATE images SET blocked=false"
+							+ " WHERE external_id=" + external_id + ";");
+			return statement.executeUpdate() == 1;
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return false;
+		}
+	}
+
 }
