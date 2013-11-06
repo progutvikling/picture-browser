@@ -2,13 +2,15 @@ package bll.admin;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import dal.admin.IImageSource;
 import dal.admin.IImageStore;
 import dal.admin.IKeywordsStore;
 import dal.admin.Image;
+import dal.admin.InstagramClient;
+import dal.admin.InstagramSource;
 import dal.admin.StoreFactory;
 import dal.admin.TwitterClient;
 import dal.admin.TwitterSource;
@@ -33,7 +35,7 @@ public class ImageFetcher {
 	 * Log output
 	 */
 	protected void log(String message) {
-		System.out.println("(" + DATE_FORMAT.format(new Date()) + ") " + message);
+		System.out.println("(" + DATE_FORMAT.format(new java.util.Date()) + ") " + message);
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class ImageFetcher {
 
 		List<IImageSource> sources = new ArrayList<IImageSource>();
 		sources.add(new TwitterSource(new TwitterClient()));
-		// sources.add(new InstagramSource(new InstagramClient()));   // <-- To be implemented...
+		sources.add(new InstagramSource(new InstagramClient()));
 
 		IImageStore imageStore = StoreFactory.getImageStore();
 		IKeywordsStore keywordsStore = StoreFactory.getKeywordsStore();
@@ -76,6 +78,7 @@ public class ImageFetcher {
 				}
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				log("Could not fetch from `" + sourceClass + "`. Trying again in " + INTERVAL + " minutes.");
 			}
 

@@ -59,8 +59,8 @@ public class TwitterSourceTest {
 		assertEquals("Got the URL from the second object",
 					 "http://example.com/image2.jpg", images.get(1).getUrl());
 
-		assertEquals("Got the ID as an int",
-					 234252, images.get(0).getID());
+		assertEquals("Got the ID as an long",
+					 1L, images.get(0).getID());
 
 		assertEquals("Got correct parsed date",
 		 			 1270817634000L, images.get(0).getCreatedTime().getTime());

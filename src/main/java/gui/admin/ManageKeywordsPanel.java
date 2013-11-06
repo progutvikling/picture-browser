@@ -83,6 +83,7 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 
 			public void actionPerformed(ActionEvent e) {
 				//JTable table = (JTable)e.getSource();
+				repaint();
 				int row = Integer.valueOf(e.getActionCommand());
 				String keyword = getValueAt(row, 0).toString();
 				handler.deleteKeyword(keyword);

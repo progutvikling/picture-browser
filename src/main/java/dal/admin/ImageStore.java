@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -17,22 +18,25 @@ import java.util.ArrayList;
 
 public class ImageStore implements IImageStore {
 	protected Connection conn;
+	SimpleDateFormat dateformat;
 
 	public ImageStore(Connection conn) {
 		this.conn = conn;
+		this.dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
 
 	public synchronized boolean insert(Image img) {
 		try {
-			PreparedStatement statement = conn
-					.prepareStatement("INSERT INTO images "
-							+ " (url, external_id, description, created_time)"
-							+ " VALUES (?, ?, ?, ?);");
+
+			PreparedStatement statement = conn.prepareStatement(
+				"INSERT IGNORE INTO images " +
+				" (url, external_id, description, created_time)" +
+				" VALUES (?, ?, ?, ?);");
 
 			statement.setString(1, img.getUrl());
-			statement.setInt(2, img.getID());
-			statement.setString(3, img.getDescription());
-			statement.setDate(4, img.getCreatedTime());
+			statement.setLong(2, img.getID());
+			statement.setString(3, StringUtils.removeEmojis(img.getDescription()));
+			statement.setString(4, dateformat.format(img.getCreatedTime()));
 			return statement.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -48,17 +52,22 @@ public class ImageStore implements IImageStore {
 		ArrayList<Image> images = new ArrayList<Image>();
 
 		try {
-			PreparedStatement statement = conn
-					.prepareStatement("SELECT url, external_id, description, created_time "
-							+ " FROM images ORDER BY id DESC LIMIT ?;");
+			PreparedStatement statement = conn.prepareStatement(
+				"SELECT id, url, external_id, description, created_time" +
+				" FROM images WHERE blocked='0'"+
+				" ORDER BY id DESC LIMIT ?;");
 			statement.setInt(1, numberOfRows);
-
+			
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				images.add(new Image(result.getString("url"), result
-						.getInt("external_id"),
-						result.getString("description"), result
-								.getDate("created_time")));
+				Image img = new Image(
+						result.getString("url"),
+						result.getLong("external_id"),
+						result.getString("description"),
+						result.getDate("created_time")
+				);
+				img.setInternalId(result.getInt("id"));
+				images.add(img);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,7 +75,7 @@ public class ImageStore implements IImageStore {
 		return images;
 	}
 
-	public synchronized boolean block(int external_id) {
+	public synchronized boolean block(long external_id) {
 		// int external_id = img.getID();
 		try {
 			PreparedStatement statement = conn
@@ -80,7 +89,7 @@ public class ImageStore implements IImageStore {
 		}
 	}
 
-	public synchronized boolean unBlock(int external_id) {
+	public synchronized boolean unBlock(long external_id) {
 		try {
 			PreparedStatement statement = conn
 					.prepareStatement("UPDATE images SET blocked=false"
