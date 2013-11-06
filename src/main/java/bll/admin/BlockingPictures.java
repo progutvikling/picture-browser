@@ -40,31 +40,13 @@ public class BlockingPictures extends JPanel implements ActionListener {
 	private ImageIcon imgIcon;
 	private URL url;
 
-	public BlockingPictures() throws IOException {
-		
-		setName("Block pictures");
-		try {
-			url = new URL("http://instagram.com/p/gVoiYdnQZf/?fb_action_ids=10151684013856400&fb_action_types=og.likes&fb_source=other_multiline&action_object_map=%7B%2210151684013856400%22%3A465874080196671%7D&action_type_map=%7B%2210151684013856400%22%3A%22og.likes%22%7D&action_ref_map=%5B%5D");
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		}
-		buffImage = ImageIO.read(url);
-
+	public BlockingPictures() {
+		this.setName("Block");
 		JPanel picPanel = new JPanel();
 		picPanel.setLayout(new GridLayout(2, 2));
-		
-		for(int i = 0; i<2; i++){
-			//			label[i] = new JLabel(imgIcon);
-			//label[i] = new JLabel(imgIcon);
-			picPanel);
-		}
+	
 		//picPanel.setLayout(new BoxLayout(picPanel, BoxLayout.Y_AXIS));
-		
-		/**http://stackoverflow.com/questions/14558959/adding-images-to-cells-in-a-gridlayout
-		BufferedImage resizedimage = resize(image,width,height); //error! type conversion
-		  */
-		 
-		
+	
 		//Bare for å aktivere mysql script
 		JPanel buttonPanel = new JPanel();
 		JButton block = new JButton("Block");
@@ -72,7 +54,7 @@ public class BlockingPictures extends JPanel implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				storeblocking.block(1);
+			//	storeblocking.block(1);
 				//label1.setText("I just blocked a picture");
 			}
 		});
@@ -82,7 +64,7 @@ public class BlockingPictures extends JPanel implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				storeblocking.unBlock(0);
+			//	storeblocking.unBlock(0);
 				//label1.setText("I just removed the block on a picture");
 			}
 		});
