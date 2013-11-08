@@ -30,7 +30,7 @@ public class ImageStore implements IImageStore {
 
 			PreparedStatement statement = conn.prepareStatement(
 				"INSERT IGNORE INTO images " +
-				" (url, external_id, description, keyword created_time)" +
+				" (url, external_id, description, keyword, created_time)" +
 				" VALUES (?, ?, ?, ?, ?);");
 
 			statement.setString(1, img.getUrl());
