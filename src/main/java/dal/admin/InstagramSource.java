@@ -63,7 +63,7 @@ public class InstagramSource implements IImageSource {
 				String url = image.getAsJsonObject().get("url").getAsString();
 				String description = picture.get("caption").getAsJsonObject().get("text").getAsString();
 
-				Image img = new Image(url, id, description, new Date((long)createdTime*1000));
+				Image img = new Image(url, id, description, keyword, new Date((long)createdTime*1000));
 				images.add(img);
 			}
 		}

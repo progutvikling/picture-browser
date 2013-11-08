@@ -74,6 +74,7 @@ public class TwitterSource implements IImageSource {
 									mediaObject.get("media_url").getAsString(),
 									id,
 									status.get("text").getAsString(),
+									keyword,
 									parseDate(status.get("created_at").getAsString()));
 								
 								images.add(img);

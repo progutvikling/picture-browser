@@ -56,11 +56,7 @@ public class KeywordsStore implements IKeywordsStore {
 	
 	public boolean deleteKeywordFromImages(String keyword) {
 		try {
-<<<<<<< HEAD
 			PreparedStatement statement = conn.prepareStatement("DELETE FROM images WHERE keyword = '" + keyword + "'");
-=======
-			PreparedStatement statement = conn.prepareStatement("DELETE FROM images WHERE description LIKE '%" + keyword + "%'");
->>>>>>> parent of 1675047... Added keyword to images table.
 			return statement.executeUpdate() > 0 ? true : false;
 		} catch (SQLException e) {
 			return false;

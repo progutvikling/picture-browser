@@ -15,10 +15,11 @@ public class Image {
 	private String url;
 	private long id;
 	private String description;
+	private String keyword;
 	private Date createdTime;
 	private int internalId;
 
-	public Image(String url, long id, String description, Date createdTime) {
+	public Image(String url, long id, String description, String keyword, Date createdTime) {
 		this.url = url;
 		this.id = id;
 		this.description = description;
