@@ -22,7 +22,7 @@ public class StoreBlockingTest {
 		id = getAId();
 		if (id == null) {
 
-			Image img = new Image("http://dummy.com/img.jpg", (long)(Math.random()*10000), "Description", new Date(0001L));
+			Image img = new Image("http://dummy.com/img.jpg", (long)(Math.random()*10000), "Description", "keyword", new Date(0001L));
 			IImageStore imageStore = StoreFactory.getImageStore();
 			imageStore.insert(img);
 

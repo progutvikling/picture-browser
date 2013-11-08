@@ -61,10 +61,9 @@ public class InstagramSource implements IImageSource {
 				JsonElement image = imgs.getAsJsonObject().get("standard_resolution");
 				int createdTime = picture.get("created_time").getAsInt();
 				String url = image.getAsJsonObject().get("url").getAsString();
-				String key = keyword;
 				String description = picture.get("caption").getAsJsonObject().get("text").getAsString();
 
-				Image img = new Image(url, id, description, key, new Date((long)createdTime*1000));
+				Image img = new Image(url, id, description, new Date((long)createdTime*1000));
 				images.add(img);
 			}
 		}
