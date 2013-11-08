@@ -18,12 +18,12 @@ public class AdminMainController {
 		
 		ManageKeywordsController manageKeywords = new ManageKeywordsController();
 		ManageConfigsController manageConfigs = new ManageConfigsController();
-		BlockingPictures blockingpictures = new BlockingPictures();
+		//BlockingPictures blockingpictures = new BlockingPictures();
 		
 		ArrayList<JPanel> panels = new ArrayList<JPanel>();
 		panels.add(manageKeywords.getView());
 		panels.add(manageConfigs.getView());
-		panels.add(blockingpictures);
+		//panels.add(blockingpictures);
 		
 		MainWindow wnd = new MainWindow(panels);
 		wnd.setVisible(true);

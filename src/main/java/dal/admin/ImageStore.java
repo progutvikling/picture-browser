@@ -30,13 +30,14 @@ public class ImageStore implements IImageStore {
 
 			PreparedStatement statement = conn.prepareStatement(
 				"INSERT IGNORE INTO images " +
-				" (url, external_id, description, created_time)" +
-				" VALUES (?, ?, ?, ?);");
+				" (url, external_id, description, keyword, created_time)" +
+				" VALUES (?, ?, ?, ?, ?);");
 
 			statement.setString(1, img.getUrl());
 			statement.setLong(2, img.getID());
 			statement.setString(3, StringUtils.removeEmojis(img.getDescription()));
-			statement.setString(4, dateformat.format(img.getCreatedTime()));
+			statement.setString(4, img.getKeyword());
+			statement.setString(5, dateformat.format(img.getCreatedTime()));
 			return statement.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,7 +54,7 @@ public class ImageStore implements IImageStore {
 
 		try {
 			PreparedStatement statement = conn.prepareStatement(
-				"SELECT id, url, external_id, description, created_time" +
+				"SELECT id, url, external_id, keyword, description, created_time" +
 				" FROM images WHERE blocked='0'"+
 				" ORDER BY created_time DESC LIMIT ?;");
 			statement.setInt(1, numberOfRows);
@@ -63,6 +64,7 @@ public class ImageStore implements IImageStore {
 				Image img = new Image(
 						result.getString("url"),
 						result.getLong("external_id"),
+						result.getString("keyword"),
 						result.getString("description"),
 						result.getDate("created_time")
 				);

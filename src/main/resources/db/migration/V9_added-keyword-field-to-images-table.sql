@@ -1,0 +1,1 @@
+ALTER TABLE images ADD keyword VARCHAR( 255 ) after description

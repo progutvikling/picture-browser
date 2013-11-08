@@ -22,7 +22,7 @@ public class ImageStoreTest {
 	@Test
 	public void insertTest() {
 		java.util.Date currentTime = new java.util.Date();
-		Image img = new Image("insertUrl", (long)(Math.random()*100000), "insertTest", new Date(currentTime.getTime()));
+		Image img = new Image("insertUrl", (long)(Math.random()*100000), "insertTest", "insertTest", new Date(currentTime.getTime()));
 		assertTrue("A valid insert should return true", store.insert(img));
 	}
 	
