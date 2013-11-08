@@ -22,8 +22,8 @@ public class Image {
 	public Image(String url, long id, String description, String keyword, Date createdTime) {
 		this.url = url;
 		this.id = id;
-		this.keyword = keyword;
 		this.description = description;
+		this.keyword = keyword;
 		this.createdTime = createdTime;
 	}
 
@@ -34,13 +34,13 @@ public class Image {
 	public long getID() {
 		return this.id;
 	}
-	
-	public String getKeyword() {
-		return this.keyword;
-	}
 
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public String getKeyword() {
+		return this.keyword;
 	}
 
 	public Date getCreatedTime() {
@@ -61,7 +61,6 @@ public class Image {
 		if (
 				img.getUrl().equals(this.url) &&
 				img.getID() == this.id &&
-				img.getKeyword() == this.keyword &&
 				img.getDescription().equals(this.description) &&
 				img.getCreatedTime().equals(this.createdTime)
 				)

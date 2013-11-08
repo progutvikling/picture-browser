@@ -47,7 +47,7 @@ public class ImageParserTest {
 	
 	@Test
 	public void givenImageCeckThatReturnedJsonIsValid() {
-		Image img = new Image("url", 1, "keyword", "description", sqlDate);
+		Image img = new Image("url", 1, "description", sqlDate);
 		String json = ImageParser.getJsonFromImage(img);
 		assertEquals(json, "{\"url\":\"url\",\"id\":1,\"description\":" +
 				"\"description\",\"createdTime\":\"" + dateTime + "\",\"internalId\":" + 0 + "}");
@@ -55,9 +55,9 @@ public class ImageParserTest {
 	
 	@Test
 	public void givenArrayListOfImagesCeckThatReturnedJsonIsValid() {
-		Image img1 = new Image("url1", 1, "keyword", "description1", sqlDate1);
+		Image img1 = new Image("url1", 1, "description1", sqlDate1);
 		
-		Image img2 = new Image("url2", 2, "keyword", "description2", sqlDate2);
+		Image img2 = new Image("url2", 2, "description2", sqlDate2);
 		
 		ArrayList<Image> images = new ArrayList<Image>();
 		images.add(img1);
@@ -74,11 +74,11 @@ public class ImageParserTest {
 	public void givenJsonCheckThatReturnedImagesAreValid() {
 		Date sqlDate1 = new Date(0);
 		String dateTime1 = sdf.format(sqlDate1);
-		Image img1 = new Image("url1", 1, "keyword", "description1", sqlDate1);
+		Image img1 = new Image("url1", 1, "description1", sqlDate1);
 		
 		Date sqlDate2 = new Date(1000);
 		String dateTime2 = sdf.format(sqlDate2);
-		Image img2 = new Image("url2", 2, "keyword", "description2", sqlDate2);
+		Image img2 = new Image("url2", 2, "description2", sqlDate2);
 		
 		String json = "[{\"url\":\"url1\",\"id\":1,\"description\":" +
 				"\"description1\",\"createdTime\":\"" + dateTime1 + "\"}" + 

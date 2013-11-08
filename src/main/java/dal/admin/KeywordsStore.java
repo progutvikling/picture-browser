@@ -56,7 +56,7 @@ public class KeywordsStore implements IKeywordsStore {
 	
 	public boolean deleteKeywordFromImages(String keyword) {
 		try {
-			PreparedStatement statement = conn.prepareStatement("DELETE FROM images WHERE keyword='" + keyword + "'");
+			PreparedStatement statement = conn.prepareStatement("DELETE FROM images WHERE keyword = '" + keyword + "'");
 			return statement.executeUpdate() > 0 ? true : false;
 		} catch (SQLException e) {
 			return false;

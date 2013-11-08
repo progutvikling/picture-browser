@@ -54,7 +54,7 @@ public class ImageStore implements IImageStore {
 
 		try {
 			PreparedStatement statement = conn.prepareStatement(
-				"SELECT id, url, external_id, keyword, description, created_time" +
+				"SELECT id, url, external_id, description, keyword, created_time" +
 				" FROM images WHERE blocked='0'"+
 				" ORDER BY created_time DESC LIMIT ?;");
 			statement.setInt(1, numberOfRows);
@@ -64,8 +64,8 @@ public class ImageStore implements IImageStore {
 				Image img = new Image(
 						result.getString("url"),
 						result.getLong("external_id"),
-						result.getString("keyword"),
 						result.getString("description"),
+						result.getString("keyword"),
 						result.getDate("created_time")
 				);
 				img.setInternalId(result.getInt("id"));
