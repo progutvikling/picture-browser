@@ -36,7 +36,8 @@ public class ImageStore implements IImageStore {
 			statement.setString(1, img.getUrl());
 			statement.setLong(2, img.getID());
 			statement.setString(3, StringUtils.removeEmojis(img.getDescription()));
-			statement.setString(4, dateformat.format(img.getCreatedTime()));
+			statement.setString(4, img.getKeyword());
+			statement.setString(5, dateformat.format(img.getCreatedTime()));
 			return statement.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
