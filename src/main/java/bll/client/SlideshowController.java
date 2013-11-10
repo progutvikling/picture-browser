@@ -20,6 +20,7 @@ public class SlideshowController implements SlideshowHandler, RefreshListener {
 		show = new Slideshow(view, this);
 		il = new ImageLoader();
 		refresher = new Refresher();
+		refresher.addRefreshListener(this);
 		refresher.start();
 	}
 
