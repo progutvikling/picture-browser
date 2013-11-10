@@ -55,6 +55,8 @@ public class BlockingPictures extends JPanel implements MouseListener {
 					count++;
 					System.out.println("mindre enn 30: " + count);
 					buffImage = loadImage(lImages.get(i).getUrl());
+					if(buffImage == null)
+						continue;
 					buffImage = resize(buffImage);
 					imgIcon = new ImageIcon(buffImage);
 					label[i] = new JLabel(imgIcon);
@@ -70,6 +72,8 @@ public class BlockingPictures extends JPanel implements MouseListener {
 					count++;
 					System.out.println("mer enn 30: " + count);
 					buffImage = loadImage(lImages.get(i).getUrl());
+					if(buffImage == null)
+						continue;
 					buffImage = resize(buffImage);
 					imgIcon = new ImageIcon(buffImage);
 					label[i] = new JLabel(imgIcon);

@@ -2,24 +2,33 @@ package bll.client;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
-import bll.utils.ImageParser;
 import dal.admin.Image;
-import dal.client.Fetcher;
 
-public class ImageLoader {
+public class ImageLoader implements RefreshListener {
 
 	private List<Image> images;
 	private int pos = 0;
 	private BufferedImage nextImage = null;
+	private Refresher refresher;
 
 	public ImageLoader() {
-		images = fetchImages();
+		refresher = new Refresher();
+		refresher.addRefreshListener(this);
+		refresher.start();
+		
+		/**
+		 * Manually fetch the images once to ensure that
+		 * users can call getNext() immediately after construction
+		 */
+		images = refresher.fetchImages();
 	}
 
 	public BufferedImage getNext() {
+		if(images == null)
+			return null;
+		
 		BufferedImage currentImage;
 		
 		if(pos == 0)
@@ -52,11 +61,6 @@ public class ImageLoader {
 			pos = 0;
 	}
 
-	private ArrayList<Image> fetchImages() {
-		String json = Fetcher.fetchImagesFromServer();
-		return ImageParser.getImageFromJson(json);
-	}
-
 	private BufferedImage loadImage(String urlString) {
 		BufferedImage bi = null;
 		try {
@@ -66,5 +70,10 @@ public class ImageLoader {
 			return null;
 		}
 		return bi;
+	}
+
+	@Override
+	public void refreshPerformed(RefreshEvent e) {
+		images = e.getImages();
 	}
 }

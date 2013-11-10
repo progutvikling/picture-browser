@@ -1,25 +1,26 @@
 package bll.client;
 
 import java.awt.image.BufferedImage;
-import java.util.Map;
-
-import bll.utils.ConfigsParser;
-
-import dal.client.Fetcher;
 import gui.client.Slideshow;
 import gui.client.SlideshowHandler;
 import gui.client.SlideshowPanel;
 
-public class SlideshowController implements SlideshowHandler {
+public class SlideshowController implements SlideshowHandler, RefreshListener {
+	
+	private static final String SLIDESHOW_DELAY_KEY = "slideshow_delay";
 	
 	private SlideshowPanel view;
 	private ImageLoader il;
 	private Slideshow show;
+	private Refresher refresher;
+	private int slideshowDelay = 3;
 	
 	public SlideshowController() {
 		view = new SlideshowPanel();
 		show = new Slideshow(view, this);
 		il = new ImageLoader();
+		refresher = new Refresher();
+		refresher.start();
 	}
 
 	@Override
@@ -35,10 +36,7 @@ public class SlideshowController implements SlideshowHandler {
 
 	@Override
 	public int getDelay() {
-		String json = Fetcher.fetchConfigsFromServer();
-		Map<String, Object> configs = ConfigsParser.getMapFromJson(json);
-		String delay = (String) configs.get("slideshow_delay");
-		return Integer.parseInt(delay);
+		return slideshowDelay;
 	}
 	
 	public SlideshowPanel getView() {
@@ -53,6 +51,12 @@ public class SlideshowController implements SlideshowHandler {
 	@Override
 	public void stop() {
 		show.stop();
+	}
+
+	@Override
+	public void refreshPerformed(RefreshEvent e) {
+		String delay = (String) e.getConfigs().get(SLIDESHOW_DELAY_KEY);
+		slideshowDelay = Integer.parseInt(delay);
 	}
 
 }
