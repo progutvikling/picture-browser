@@ -13,6 +13,7 @@ public class SlideshowMainController {
 	public static void main(String[] args) {
 		initializeSlideshow();
 		setFullScreenMode();
+		setVisible();
 		startSlideshow();
 	}
 	
@@ -23,11 +24,14 @@ public class SlideshowMainController {
 		
 	}
 	
+	private static void setVisible() {
+		wnd.pack();
+		wnd.setVisible(true);
+	}
+	
 	private static void setFullScreenMode() {
 		DisplayMode dm=new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN);
 		wnd.setFullScreenMode(dm);
-		wnd.pack();
-		wnd.setVisible(true);
 	}
 	
 	private static void startSlideshow() {
