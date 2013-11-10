@@ -1,36 +1,25 @@
 package bll.admin;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
+
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import bll.utils.ImageParser;
-import sun.awt.image.BufferedImageDevice;
 import dal.admin.IImageStore;
 import dal.admin.Image;
 import dal.admin.StoreFactory;
@@ -46,63 +35,62 @@ public class BlockingPictures extends JPanel implements MouseListener {
 
 	private JLabel label[];
 	private BufferedImage buffImage;
-	private ImageIcon imgIcon = null;
+	private ImageIcon imgIcon;
 	private List<Image> lImages;
-	// private long[] ex_id;
+	private int kol = 4;
 
-	private BufferedImage resizeImage;
 
 	public BlockingPictures() {
 		this.setName("Block");
 		ImageLoader();
 		JPanel picPanel = new JPanel();
-		picPanel.setLayout(new GridLayout(5, 5));
+		picPanel.setLayout(new GridLayout((lImages.size() / kol)+1, kol, 5, 5));
 		label = new JLabel[lImages.size()];
 		System.out.println("Antall bilder: " + lImages.size());
 
 		int count = 0;
 		if (lImages.size() != 0) {
-			if (lImages.size() > 20) {
-
-				for (int i = 0; i < 20; i++) {
+			if(lImages.size() <30){
+				for (int i = 0; i < lImages.size(); i++) {
+					count++;
+					System.out.println("mindre enn 30: " + count);
+					buffImage = loadImage(lImages.get(i).getUrl());
+					buffImage = resize(buffImage);
+					imgIcon = new ImageIcon(buffImage);
+					label[i] = new JLabel(imgIcon);
+					label[i].addMouseListener(createMouseListener());
+					picPanel.add(label[i]);
+				}
+			}
+		
+			//Bare for å slippe å vente på loading av bilde enn så lenge
+			   if (lImages.size() >= 30) {
+			  System.out.println("mindre enn 30");
+				for (int i = 0; i < 33; i++) {
 					count++;
 					System.out.println("mer enn 30: " + count);
 					buffImage = loadImage(lImages.get(i).getUrl());
 					buffImage = resize(buffImage);
-					// ex_id[i] = (lImages.get(i).getID());
 					imgIcon = new ImageIcon(buffImage);
 					label[i] = new JLabel(imgIcon);
 					label[i].addMouseListener(createMouseListener());
 					picPanel.add(label[i]);
-					// System.out.println("test: " + lImages.get(i).getUrl());
-				}
-			} else if (lImages.size() <= 20) {
-				System.out.println("mindre enn 30");
-
-				for (int i = 0; i < lImages.size(); i++) {
-					buffImage = loadImage(lImages.get(i).getUrl());
-					buffImage = resize(buffImage);
-					// ex_id[i] = (lImages.get(i).getID());
-					imgIcon = new ImageIcon(buffImage);
-					label[i] = new JLabel(imgIcon);
-					label[i].addMouseListener(createMouseListener());
-					picPanel.add(label[i]);
-					// System.out.println("test: " + lImages.get(i).getUrl());
-
 				}
 			}
-			// }
+		}
+			 
 
-			// picPanel.setLayout(new BoxLayout(picPanel, BoxLayout.Y_AXIS));
-
-			picPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-			picPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-
+			JScrollPane scrollpane = new JScrollPane(picPanel);
+			scrollpane
+					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollpane
+					.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+			scrollpane.setBounds(getVisibleRect());
 			this.setLayout(new BorderLayout());
-			this.add(picPanel, BorderLayout.CENTER);
+			this.add(scrollpane, BorderLayout.CENTER);
 			setVisible(true);
 		}
-	}
+	
 
 	public void ImageLoader() {
 		lImages = getImagesFromDB();
@@ -127,8 +115,8 @@ public class BlockingPictures extends JPanel implements MouseListener {
 	public static BufferedImage resize(BufferedImage img) {
 		int w = img.getWidth();
 		int h = img.getHeight();
-		int newH = 140;
-		int newW = 140;
+		int newH = 130;
+		int newW = 130;
 		BufferedImage dimg = new BufferedImage(newH, newW, img.getType());
 		Graphics2D g = dimg.createGraphics();
 		System.out.println("graphics");
@@ -143,20 +131,28 @@ public class BlockingPictures extends JPanel implements MouseListener {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JLabel coverLabel = (JLabel) e.getSource();
+				for (int i = 0; i < lImages.size(); i++) {
+					if (e.getSource().equals(label[i])) {
+						if (!coverLabel.isEnabled()) {
+							coverLabel.setEnabled(true);
+							storeblocking.unBlock(lImages.get(i).getID());
+							System.out.println("unblock " + lImages.get(i).getID());
 
-				JLabel label = (JLabel) e.getSource();
-				if (!label.isEnabled()) {
-					label.setEnabled(true);
-					System.out.println("unblocked");
+						} else {
+							coverLabel.setEnabled(false);
+							storeblocking.block(lImages.get(i).getID());
+							System.out.println("block " + lImages.get(i).getID());
 
-				} else {
-					// label.setText("Clicked");
-					label.setEnabled(false);
-					storeblocking.block(3);
-					System.out.println("blocked");
+
+						}
+					}
+
 				}
+
 			}
 		};
+
 	}
 
 	@Override
