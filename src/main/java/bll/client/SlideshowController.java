@@ -5,23 +5,16 @@ import gui.client.Slideshow;
 import gui.client.SlideshowHandler;
 import gui.client.SlideshowPanel;
 
-public class SlideshowController implements SlideshowHandler, RefreshListener {
-	
-	private static final String SLIDESHOW_DELAY_KEY = "slideshow_delay";
+public class SlideshowController implements SlideshowHandler {
 	
 	private SlideshowPanel view;
 	private ImageLoader il;
 	private Slideshow show;
-	private Refresher refresher;
-	private int slideshowDelay = 3;
 	
 	public SlideshowController() {
 		view = new SlideshowPanel();
 		show = new Slideshow(view, this);
 		il = new ImageLoader();
-		refresher = new Refresher();
-		refresher.addRefreshListener(this);
-		refresher.start();
 	}
 
 	@Override
@@ -37,7 +30,7 @@ public class SlideshowController implements SlideshowHandler, RefreshListener {
 
 	@Override
 	public int getDelay() {
-		return slideshowDelay;
+		return il.getSlideshowDelay();
 	}
 	
 	public SlideshowPanel getView() {
@@ -52,12 +45,6 @@ public class SlideshowController implements SlideshowHandler, RefreshListener {
 	@Override
 	public void stop() {
 		show.stop();
-	}
-
-	@Override
-	public void refreshPerformed(RefreshEvent e) {
-		String delay = (String) e.getConfigs().get(SLIDESHOW_DELAY_KEY);
-		slideshowDelay = Integer.parseInt(delay);
 	}
 
 }

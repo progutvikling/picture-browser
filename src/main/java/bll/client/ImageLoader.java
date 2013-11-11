@@ -7,11 +7,14 @@ import javax.imageio.ImageIO;
 import dal.admin.Image;
 
 public class ImageLoader implements RefreshListener {
+	
+	private static final String SLIDESHOW_DELAY_KEY = "slideshow_delay";
 
 	private List<Image> images;
 	private int pos = 0;
 	private BufferedImage nextImage = null;
 	private Refresher refresher;
+	private int slideshowDelay = 3;
 
 	public ImageLoader() {
 		refresher = new Refresher();
@@ -46,6 +49,10 @@ public class ImageLoader implements RefreshListener {
 		return currentImage;
 	}
 	
+	public int getSlideshowDelay() {
+		return slideshowDelay;
+	}
+	
 	private void loadNextImage() {
 		new Thread(new Runnable() {
 		    @Override public void run() {
@@ -75,5 +82,7 @@ public class ImageLoader implements RefreshListener {
 	@Override
 	public void refreshPerformed(RefreshEvent e) {
 		images = e.getImages();
+		String delay = (String) e.getConfigs().get(SLIDESHOW_DELAY_KEY);
+		slideshowDelay = Integer.parseInt(delay);
 	}
 }
