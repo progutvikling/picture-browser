@@ -39,6 +39,7 @@ public class MainWindow extends JFrame {
 		    private static final long serialVersionUID = 1l;
 		    @Override public void actionPerformed(ActionEvent e) {
 		        endFullScreenMode();
+				System.exit(0);
 		    }
 		});
 	}
