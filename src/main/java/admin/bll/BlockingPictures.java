@@ -1,6 +1,7 @@
 package admin.bll;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
@@ -20,6 +21,7 @@ import javax.swing.JScrollPane;
 
 import common.dal.IImageStore;
 import common.dal.Image;
+import common.dal.ImageStore;
 import common.dal.StoreFactory;
 import common.utils.ImageParser;
 import client.dal.Fetcher;
@@ -37,24 +39,32 @@ public class BlockingPictures extends JPanel implements MouseListener {
 	private ImageIcon imgIcon;
 	private List<Image> lImages;
 	private int kol = 4;
+	private IImageStore imagestore;
 
-	public BlockingPictures() {
+	public BlockingPictures(IImageStore imagestore) {
 		this.setName("Block");
+		this.imagestore = imagestore;
 		ImageLoader();
 		JPanel picPanel = new JPanel();
-		picPanel.setLayout(new GridLayout((lImages.size() / kol) + 1, kol, 5, 5));
+		picPanel.setLayout(new GridLayout((lImages.size() / kol) + 1, kol, 5, 5));//Skal være lImage.size()/kol
+		//picPanel.setLayout(new FlowLayout(lImages.size()/kol,5,5));
 		label = new JLabel[lImages.size()];
 		System.out.println("Antall bilder: " + lImages.size());
 
 		int count = 0;
+		//int count2 = 0;
+
 		if (lImages.size() != 0) {
 			if (lImages.size() < 30) {
 				for (int i = 0; i < lImages.size(); i++) {
 					count++;
 					System.out.println(count);
 					buffImage = loadImage(lImages.get(i).getUrl());
-					if(buffImage == null)
+					if(buffImage == null){
+						//count2++;
+						//System.out.println("feilet" + count2);
 						continue;
+					}
 					buffImage = resize(buffImage);
 					if (buffImage != null) {
 						imgIcon = new ImageIcon(buffImage);
@@ -67,12 +77,15 @@ public class BlockingPictures extends JPanel implements MouseListener {
 
 			// Bare for å slippe å vente på loading av bilde enn så lenge if
 			if (lImages.size() >= 30) {
-				for (int i = 0; i < 37; i++) {
+				for (int i = 0; i <30; i++) {
 					count++;
 					System.out.println("mer enn 30: " + count);
 					buffImage = loadImage(lImages.get(i).getUrl());
-					if(buffImage == null)
+					if(buffImage == null){
+					//	count2++;
+					//	System.out.println("-------------------------feilet" + count2);
 						continue;
+					}
 					buffImage = resize(buffImage);
 					if (buffImage != null) {
 						imgIcon = new ImageIcon(buffImage);
@@ -97,14 +110,10 @@ public class BlockingPictures extends JPanel implements MouseListener {
 	}
 
 	public void ImageLoader() {
-		lImages = getImagesFromDB();
+		lImages=imagestore.getLast(100);
 
 	}
 
-	private ArrayList<Image> getImagesFromDB() {
-		String json = Fetcher.fetchImagesFromServer();
-		return ImageParser.getImageFromJson(json);
-	}
 
 	private BufferedImage loadImage(String urlString) {
 		BufferedImage bImages = null;
@@ -126,7 +135,6 @@ public class BlockingPictures extends JPanel implements MouseListener {
 			int newW = 130;
 			BufferedImage dimg = new BufferedImage(newH, newW, img.getType());
 			Graphics2D g = dimg.createGraphics();
-			System.out.println("graphics");
 			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			g.drawImage(img, 0, 0, newW, newH, 0, 0, w, h, null);
@@ -147,14 +155,12 @@ public class BlockingPictures extends JPanel implements MouseListener {
 						if (!coverLabel.isEnabled()) {
 							coverLabel.setEnabled(true);
 							storeblocking.unBlock(lImages.get(i).getID());
-							System.out.println("unblock "
-									+ lImages.get(i).getID());
+							//System.out.println("unblock "+ lImages.get(i).getID());
 
 						} else {
 							coverLabel.setEnabled(false);
 							storeblocking.block(lImages.get(i).getID());
-							System.out.println("block "
-									+ lImages.get(i).getID());
+							//System.out.println("block "+ lImages.get(i).getID());
 
 						}
 					}

@@ -29,7 +29,7 @@ public class MainController {
 		ManageConfigsController manageConfigs = new ManageConfigsController(
 				StoreFactory.getConfigsStore());
 		
-		BlockingPictures blockingpictures = new BlockingPictures();
+		BlockingPictures blockingpictures = new BlockingPictures(StoreFactory.getImageStore());
 		
 		ArrayList<JPanel> panels = new ArrayList<JPanel>();
 		panels.add(manageKeywords.getView());
