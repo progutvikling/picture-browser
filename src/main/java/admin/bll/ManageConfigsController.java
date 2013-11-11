@@ -11,10 +11,11 @@ public class ManageConfigsController implements ManageConfigsPanelHandler {
 	public ManageConfigsPanel view;
 	public IConfigsStore store;
 	
-	public Map<String, String> configs = store.getConfigs();
+	public Map<String, String> configs;
 	
 	public ManageConfigsController(IConfigsStore store) {
 		this.store = store;
+		configs = store.getConfigs();
 		view = new ManageConfigsPanel(this);
 	}
 
