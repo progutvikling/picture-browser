@@ -4,19 +4,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-
 import common.dal.IConfigsStore;
 import common.dal.IImageStore;
-import common.dal.Image;
 import common.dal.StoreFactory;
-import common.utils.ImageParser;
 
 /**
  * 
@@ -65,14 +60,9 @@ public class ImageServer {
 
 	private class ImagesHandler implements HttpHandler {
 		public void handle(HttpExchange exchange) throws IOException {
-			String response = getJsonRepresentationOfLastImages(NUMBER_OF_IMAGES_TO_SERVE);
-			ImageServer.respondToClient(exchange, response);
-		}
-
-		private String getJsonRepresentationOfLastImages(int numberOfImages) {
 			IImageStore store = StoreFactory.getImageStore();
-			ArrayList<Image> lastImages = store.getLast(numberOfImages);
-			return ImageParser.getJsonFromImage(lastImages);
+			String response = store.getLastAsJson(NUMBER_OF_IMAGES_TO_SERVE);
+			ImageServer.respondToClient(exchange, response);
 		}
 	}
 

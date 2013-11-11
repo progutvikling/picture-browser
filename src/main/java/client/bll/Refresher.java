@@ -3,10 +3,8 @@ package client.bll;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import common.dal.Image;
 import common.utils.ConfigsParser;
-import common.utils.ImageParser;
 import client.dal.Fetcher;
 
 /**
@@ -44,7 +42,7 @@ public class Refresher extends Thread {
 	
 	public List<Image> fetchImages() {
 		String json = Fetcher.fetchImagesFromServer();
-		return ImageParser.getImageFromJson(json);
+		return Image.createImagesFromJson(json);
 	}
 	
 	public Map<String, Object> fetchConfigs() {

@@ -1,20 +1,14 @@
 package test.common;
 
 import static org.junit.Assert.assertEquals;
-
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import common.dal.Image;
-import common.utils.ImageParser;
 
 /**
  * 
@@ -23,7 +17,7 @@ import common.utils.ImageParser;
  *
  */
 
-public class ImageParserTest {
+public class ImageTest {
 	
 	String format;
 	SimpleDateFormat sdf;
@@ -55,7 +49,7 @@ public class ImageParserTest {
 	@Test
 	public void givenImageCeckThatReturnedJsonIsValid() {
 		Image img = new Image("myurl", 1, "mydescription", "mykeyword", sqlDate);
-		String json = ImageParser.getJsonFromImage(img);
+		String json = img.toJson();
 
 		JsonParser parser = new JsonParser();
 		JsonObject obj = parser.parse(json).getAsJsonObject();
@@ -74,28 +68,6 @@ public class ImageParserTest {
 	}
 	
 	@Test
-	public void givenArrayListOfImagesCeckThatReturnedJsonIsValid() {
-		Image img1 = new Image("url1", 1, "description1", "keyword", sqlDate1);
-		Image img2 = new Image("url2", 2, "description2", "keyword2", sqlDate2);
-		
-		ArrayList<Image> images = new ArrayList<Image>();
-		images.add(img1);
-		images.add(img2);
-		
-		String json = ImageParser.getJsonFromImage(images);
-
-		JsonParser parser = new JsonParser();
-		JsonArray list = parser.parse(json).getAsJsonArray();
-
-		// Testing just some of the data from each image:
-		assertEquals("Correct URL of first image:",
-					 list.get(0).getAsJsonObject().get("url").getAsString(), "url1");
-
-		assertEquals("Correct URL of first image:",
-					 list.get(1).getAsJsonObject().get("description").getAsString(), "description2");
-	}
-	
-	@Test
 	public void givenJsonCheckThatReturnedImagesAreValid() {
 		Date sqlDate1 = new Date(0);
 		String dateTime1 = sdf.format(sqlDate1);
@@ -110,7 +82,7 @@ public class ImageParserTest {
 				",{\"url\":\"url2\",\"id\":2,\"description\":" +
 						"\"description2\",\"createdTime\":\"" + dateTime2 + "\"}]";
 		
-		ArrayList<Image> images = ImageParser.getImageFromJson(json);
+		ArrayList<Image> images = Image.createImagesFromJson(json);
 		Image parsedImg1 = images.get(0);
 		Image parsedImg2 = images.get(1);
 		

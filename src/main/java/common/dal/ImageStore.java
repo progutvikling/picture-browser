@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import common.utils.StringUtils;
 
 /**
@@ -14,7 +16,8 @@ import common.utils.StringUtils;
  * This class is responsible for inserting and retrieving images from our
  * database
  * 
- * @author Stian Sandve / Morten Wærsland
+ * @author Stian Sandve <stian@sandve.org
+ * @author Morten Wærsland
  * 
  */
 
@@ -77,6 +80,15 @@ public class ImageStore implements IImageStore {
 			e.printStackTrace();
 		}
 		return images;
+	}
+	
+	public synchronized String getLastAsJson(int numberOfRows) {
+		List<Image> images = getLast(numberOfRows);
+		String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+		Gson gson = new GsonBuilder()
+		.setDateFormat(DATE_FORMAT).create();
+		String json = gson.toJson(images);
+		return json;
 	}
 
 	public synchronized boolean block(long external_id) {

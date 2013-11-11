@@ -11,17 +11,14 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import common.dal.IImageStore;
 import common.dal.Image;
 import common.dal.StoreFactory;
-import common.utils.ImageParser;
 import client.dal.Fetcher;
 
 public class BlockingPictures extends JPanel implements MouseListener {
@@ -103,7 +100,7 @@ public class BlockingPictures extends JPanel implements MouseListener {
 
 	private ArrayList<Image> getImagesFromDB() {
 		String json = Fetcher.fetchImagesFromServer();
-		return ImageParser.getImageFromJson(json);
+		return Image.createImagesFromJson(json);
 	}
 
 	private BufferedImage loadImage(String urlString) {

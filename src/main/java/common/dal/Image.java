@@ -1,6 +1,11 @@
 package common.dal;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * 
@@ -11,6 +16,8 @@ import java.sql.Date;
  */
 
 public class Image {
+
+	private static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
 	private String url;
 	private long id;
@@ -27,6 +34,17 @@ public class Image {
 		this.createdTime = createdTime;
 	}
 
+	public Image(String json) {
+		Gson gson = new GsonBuilder()
+		.setDateFormat(DATE_FORMAT).create();
+		Image img = gson.fromJson(json, Image.class);
+		this.url = img.getUrl();
+		this.id = img.getID();
+		this.description = img.getDescription();
+		this.keyword = img.getKeyword();
+		this.createdTime = img.getCreatedTime();
+	}
+
 	public String getUrl() {
 		return this.url;
 	}
@@ -38,7 +56,7 @@ public class Image {
 	public String getDescription() {
 		return this.description;
 	}
-	
+
 	public String getKeyword() {
 		return this.keyword;
 	}
@@ -67,5 +85,25 @@ public class Image {
 			return true;
 		else
 			return false;
+	}
+
+	public String toJson() {
+		String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+		Gson gson = new GsonBuilder()
+		.setDateFormat(DATE_FORMAT).create();
+		String json = gson.toJson(this);
+		return json;
+	}
+
+	public static ArrayList<Image> createImagesFromJson(String json) {
+		if(json != null && !(json.equals(""))) {
+			Gson gson = new GsonBuilder()
+			.setDateFormat(DATE_FORMAT).create();
+
+			Image[] img = gson.fromJson(json, Image[].class);
+			return new ArrayList<Image>(Arrays.asList(img));
+		} 
+		else
+			return null;
 	}
 }

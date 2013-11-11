@@ -8,5 +8,6 @@ public interface IImageStore {
 	public ArrayList<Image> getLast(int numberOfRows);
 	public boolean block(long id);
 	public boolean unBlock(long id);
+	public String getLastAsJson(int numberOfImagesToServe);
 
 }
