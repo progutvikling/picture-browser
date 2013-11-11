@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractCellEditor;
@@ -38,6 +40,7 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 	JTable table;
 	JTextField keywordTextField;
 	JButton addButton;
+	private ResourceBundle rb;
 
 	ArrayList<String> keywords = new ArrayList<String>();
 
@@ -49,8 +52,13 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 	 */
 	public ManageKeywordsPanel(ManageKeywordsPanelHandler handler) {
 		this.handler = handler;
+		
+		Locale norwegian = new Locale("no_NO");
+		this.rb = ResourceBundle.getBundle("Strings", norwegian);
 
-		setName("Administrer søkeord");
+		columns = new String[]{rb.getString("keyword"), rb.getString("delete")};
+		
+		setName(rb.getString("admin_keywords"));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		add(createTable());
@@ -61,7 +69,7 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 		keywordTextField.addActionListener(actionListener);
 		keywordTextField.setMaximumSize(new Dimension(Integer.MAX_VALUE, keywordTextField.getPreferredSize().height));
 
-		addButton = new JButton("Legg til");
+		addButton = new JButton(rb.getString("add"));
 		addButton.addActionListener(actionListener);
 
 		JPanel hPanel = new JPanel();
@@ -124,7 +132,7 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 	 * http://docs.oracle.com/javase/7/docs/api/javax/swing/table/TableModel.html
 	 */
 
-	public String[] columns = {"Søkeord", "Delete"};
+	public String[] columns;
 
 	@Override
 	public int getColumnCount() {
@@ -144,7 +152,7 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 	@Override
 	public Object getValueAt(int r, int c) {
 		if (c == 1) {
-			return "delete";
+			return rb.getString("delete");
 		} else {
 			return handler.getKeywords().get(r);
 		}

@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -25,9 +27,16 @@ public class LoginDialog extends JDialog{
 	JLabel brukernavn, passord;
 	JTextField brukernavninput;
 	JPasswordField passordinput;
+	private ResourceBundle rb;
 	
 	public LoginDialog(Frame parent){
-        super(parent, "Login", true);
+		super(parent, true);
+		
+		Locale norwegian = new Locale("no_NO");
+		this.rb = ResourceBundle.getBundle("Strings", norwegian);
+		
+		setTitle(rb.getString("login"));
+		
 		setSize(360, 150);
         setResizable(false);
         //Vist man "krysser ut dialogen" s�� avslutter programmet
@@ -45,7 +54,7 @@ public class LoginDialog extends JDialog{
 		panel2 = new JPanel(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
 		cs.fill = GridBagConstraints.HORIZONTAL;
-		brukernavn = new JLabel("Brukernavn: ");
+		brukernavn = new JLabel(rb.getString("username") + ": ");
 		cs.gridx = 0;
 		cs.gridy = 0;
 		cs.gridwidth = 1;
@@ -55,7 +64,7 @@ public class LoginDialog extends JDialog{
 		cs.gridy = 0;
 		cs.gridwidth = 2;
 		panel.add(brukernavninput, cs);
-		passord = new JLabel("Passord: ");
+		passord = new JLabel(rb.getString("password") + ": ");
 		cs.gridx = 0;
 		cs.gridy = 1;
 		cs.gridwidth = 1;
@@ -68,10 +77,10 @@ public class LoginDialog extends JDialog{
 		panel2.add(passordinput, cs);
 		
 		//Lagger knappene og logikken deres.
-		ok = new JButton("Login");
+		ok = new JButton(rb.getString("login"));
 		//Vist bruker trykker login, sjekker programmet om input var korrekt.
 		ok.addActionListener(loginAction);
-		avbryt = new JButton("Cancel");
+		avbryt = new JButton(rb.getString("cancel"));
 		//Avslutter programmet
 		avbryt.addActionListener(new ActionListener() {
 
@@ -103,7 +112,7 @@ public class LoginDialog extends JDialog{
 				dispose();
 			}
 			else{
-				JOptionPane.showMessageDialog(frame, "Ugyldigt brukernavn eller passord");
+				JOptionPane.showMessageDialog(frame, rb.getString("login_error"));
 			}
 		}
 	}
