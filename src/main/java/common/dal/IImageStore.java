@@ -8,5 +8,10 @@ public interface IImageStore {
 	public ArrayList<Image> getLast(int numberOfRows);
 	public boolean block(long id);
 	public boolean unBlock(long id);
+	
+	/**
+	 * Deletes a keyword from images table and returns true if success.
+	 */
+	public boolean deleteAllWithKeyword(String keyword);
 
 }

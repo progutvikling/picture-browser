@@ -9,6 +9,8 @@ import admin.bll.ManageConfigsController;
 import admin.bll.ManageKeywordsController;
 import admin.gui.MainWindow;
 
+import common.dal.StoreFactory;
+
 /**
  * This class sets up the main window with all its tabs.
  * Add lines to this class when adding more admin panels!
@@ -19,7 +21,10 @@ public class MainController {
 		ImageServer server = new ImageServer();
 		server.start();
 		
-		ManageKeywordsController manageKeywords = new ManageKeywordsController();
+		ManageKeywordsController manageKeywords = new ManageKeywordsController(
+				StoreFactory.getKeywordsStore(),
+				StoreFactory.getImageStore());
+
 		ManageConfigsController manageConfigs = new ManageConfigsController();
 		// BlockingPictures blockingpictures = new BlockingPictures();
 		

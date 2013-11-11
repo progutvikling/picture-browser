@@ -105,5 +105,16 @@ public class ImageStore implements IImageStore {
 			return false;
 		}
 	}
+	
+
+	
+	public synchronized boolean deleteAllWithKeyword(String keyword) {
+		try {
+			PreparedStatement statement = conn.prepareStatement("DELETE FROM images WHERE keyword = '" + keyword + "'");
+			return statement.executeUpdate() > 0 ? true : false;
+		} catch (SQLException e) {
+			return false;
+		}
+	}	
 
 }
