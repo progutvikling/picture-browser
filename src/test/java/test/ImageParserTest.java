@@ -1,12 +1,20 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import bll.utils.ImageParser;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import dal.admin.Image;
 
 /**
@@ -47,16 +55,28 @@ public class ImageParserTest {
 	
 	@Test
 	public void givenImageCeckThatReturnedJsonIsValid() {
-		Image img = new Image("url", 1, "description", "keyword", sqlDate);
+		Image img = new Image("myurl", 1, "mydescription", "mykeyword", sqlDate);
 		String json = ImageParser.getJsonFromImage(img);
-		assertEquals(json, "{\"url\":\"url\",\"id\":1,\"description\":" +
-				"\"description\",\"createdTime\":\"" + dateTime + "\",\"internalId\":" + 0 + "}");
+
+		JsonParser parser = new JsonParser();
+		JsonObject obj = parser.parse(json).getAsJsonObject();
+
+		assertEquals("URL should be set in json",
+					 obj.get("url").getAsString(), "myurl");
+
+		assertEquals("Id should be set in json",
+					 obj.get("id").getAsLong(), 1L);
+
+		assertEquals("Description should be set in json:",
+					 obj.get("description").getAsString(), "mydescription");
+
+		assertEquals("Date should be set in JSON",
+					 obj.get("createdTime").getAsString(), dateTime);
 	}
 	
 	@Test
 	public void givenArrayListOfImagesCeckThatReturnedJsonIsValid() {
 		Image img1 = new Image("url1", 1, "description1", "keyword", sqlDate1);
-		
 		Image img2 = new Image("url2", 2, "description2", "keyword2", sqlDate2);
 		
 		ArrayList<Image> images = new ArrayList<Image>();
@@ -64,10 +84,16 @@ public class ImageParserTest {
 		images.add(img2);
 		
 		String json = ImageParser.getJsonFromImage(images);
-		assertEquals(json, "[{\"url\":\"url1\",\"id\":1,\"description\":" +
-				"\"description1\",\"createdTime\":\"" + dateTime1 + "\",\"internalId\":" + 0 + "}" + 
-				",{\"url\":\"url2\",\"id\":2,\"description\":" +
-						"\"description2\",\"createdTime\":\"" + dateTime2 + "\",\"internalId\":" + 0 + "}]");
+
+		JsonParser parser = new JsonParser();
+		JsonArray list = parser.parse(json).getAsJsonArray();
+
+		// Testing just some of the data from each image:
+		assertEquals("Correct URL of first image:",
+					 list.get(0).getAsJsonObject().get("url").getAsString(), "url1");
+
+		assertEquals("Correct URL of first image:",
+					 list.get(1).getAsJsonObject().get("description").getAsString(), "description2");
 	}
 	
 	@Test
@@ -91,6 +117,5 @@ public class ImageParserTest {
 		
 		assertEquals(img1, parsedImg1);
 		assertEquals(img2, parsedImg2);
-		
 	}
 }
