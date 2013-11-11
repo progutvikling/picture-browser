@@ -5,6 +5,14 @@ import java.util.Map;
 
 import dal.admin.Image;
 
+/**
+ * A refresh event consists of the latest images
+ * and configurations from the database
+ * 
+ * @author Stian Sandve <stian@sandve.org>
+ *
+ */
+
 public class RefreshEvent {
 	
 	List<Image> images;

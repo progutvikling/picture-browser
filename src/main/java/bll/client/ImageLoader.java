@@ -6,6 +6,18 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import dal.admin.Image;
 
+/**
+ * This class is responsible for providing the
+ * slide show with images. It asynchronous loads the 
+ * next image into memory while the current images is shown.
+ * 
+ * It also listens for changes from the refresher to keep
+ * images and configs up to date.
+ * 
+ * @author Stian Sandve <stian@sandve.org>
+ *
+ */
+
 public class ImageLoader implements RefreshListener {
 	
 	private static final String SLIDESHOW_DELAY_KEY = "slideshow_delay";

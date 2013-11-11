@@ -8,6 +8,18 @@ import bll.utils.ImageParser;
 import dal.admin.Image;
 import dal.client.Fetcher;
 
+/**
+ * This class runs forever in the background and fetches
+ * the latest data from the server every X minutes,
+ * where X is the INTERVAL constant.
+ * 
+ * You can implement a refresh listener and register your 
+ * class to get notified when new data is fetched.
+ * 
+ * @author Stian Sandve <stian@sandve.org>
+ *
+ */
+
 public class Refresher extends Thread {
 
 	private static final int INTERVAL = 5;

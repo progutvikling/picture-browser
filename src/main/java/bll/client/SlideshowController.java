@@ -5,6 +5,13 @@ import gui.client.Slideshow;
 import gui.client.SlideshowHandler;
 import gui.client.SlideshowPanel;
 
+/**
+ * Cotroller class for the slide show
+ * 
+ * @author Stian Sandve <stian@sandve.org>
+ *
+ */
+
 public class SlideshowController implements SlideshowHandler {
 	
 	private SlideshowPanel view;

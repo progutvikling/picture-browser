@@ -1,9 +1,16 @@
 package bll.client;
 
 import java.awt.DisplayMode;
-
 import gui.client.MainWindow;
 import javax.swing.JFrame;
+
+/**
+ * This class initializes all that is necessary to run the
+ * slide show
+ * 
+ * @author Stian Sandve <stian@sandve.org
+ *
+ */
 
 public class SlideshowMainController {
 	
