@@ -2,19 +2,20 @@ package admin.bll;
 
 import java.util.Map;
 
-import common.dal.IConfigsStore;
-import common.dal.StoreFactory;
-
 import admin.gui.ManageConfigsPanel;
 import admin.gui.ManageConfigsPanelHandler;
 
+import common.dal.IConfigsStore;
+
 public class ManageConfigsController implements ManageConfigsPanelHandler {
 	public ManageConfigsPanel view;
-	public IConfigsStore store = StoreFactory.getConfigsStore();
+	public IConfigsStore store;
 	
-	public Map<String, String> configs = store.getConfigs();
+	public Map<String, String> configs;
 	
-	public ManageConfigsController() {
+	public ManageConfigsController(IConfigsStore store) {
+		this.store = store;
+		configs = store.getConfigs();
 		view = new ManageConfigsPanel(this);
 	}
 

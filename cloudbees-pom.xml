@@ -50,5 +50,10 @@
         </configuration>
       </plugin>
     </plugins>
+	<testResources>
+	  <testResource>
+		<directory>src/main/java</directory>
+	  </testResource>
+	</testResources>
   </build>
 </project>
