@@ -12,7 +12,7 @@ import common.dal.Image;
 
 /**
  * 
- * Unit tests for bll.admin.ImageParser
+ * Unit tests for common.dal.Image
  * @author Stian Sandve
  *
  */

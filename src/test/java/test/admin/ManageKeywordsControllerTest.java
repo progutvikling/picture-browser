@@ -125,6 +125,12 @@ public class ManageKeywordsControllerTest {
 			deletedKeywords.add(keyword);
 			return true;
 		}
+
+		@Override
+		public String getLastAsJson(int numberOfImagesToServe) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 		
 	}
 }
