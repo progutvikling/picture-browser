@@ -18,7 +18,7 @@ import javax.swing.JSlider;
 public class ManageConfigsPanel extends JPanel {
 	private static final long serialVersionUID = -6769963790859811312L;
 
-	private static final int DELAY_MIN = 1;
+	private static final int DELAY_MIN = 2;
 	private static final int DELAY_MAX = 10;
 
 	private JSlider slideshowDelay;
@@ -45,7 +45,7 @@ public class ManageConfigsPanel extends JPanel {
 
 		String delayInit = handler.getConfig("slideshow_delay");
 		if (delayInit == null) {
-		    delayInit = "1";
+		    delayInit = "3";
 		}
 
 		//Create the slider.
