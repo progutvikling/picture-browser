@@ -2,6 +2,8 @@ package client.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -38,7 +40,12 @@ public class SlideshowPanel extends JPanel implements Canvas {
 	 * This method does nothing if bi is null.
 	 */
 	public void setImage(BufferedImage bi) {
-		BufferedImage scaledImage = scaleImageToFitPanel(bi, screenSize);
+		BufferedImage scaledImage;
+		try {
+			scaledImage = scaleImageToFitPanel(bi, screenSize);
+		} catch (IllegalArgumentException e) {
+			scaledImage = null;
+		}
 		this.bi = scaledImage;
 		this.setMargins();
 		this.revalidate();
@@ -48,9 +55,21 @@ public class SlideshowPanel extends JPanel implements Canvas {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(bi, marginX, marginY, null);
+		if (bi != null)
+			g.drawImage(bi, marginX, marginY, null);
+		else {
+			String loading = "Loading...";
+			Font f = new Font("Arial", Font.BOLD, 20);
+			g.setColor(Color.WHITE);
+			g.setFont(f);
+			FontMetrics fm = g.getFontMetrics();
+			int totalWidth = (fm.stringWidth(loading) * 2) + 4;
+			int x = ((getWidth() - totalWidth) / 2) + 2;
+			int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
+			g.drawString(loading, x, y);
+		}
 	}
-	
+
 	private static double getScaleFactor(int currentSize, int targetSize) {    
 		double scale = 1;
 		scale = (double) targetSize / (double) currentSize;
@@ -69,7 +88,8 @@ public class SlideshowPanel extends JPanel implements Canvas {
 		return scale;
 	}
 
-	private static BufferedImage scaleImageToFitPanel(BufferedImage src, Dimension targetDimension) {
+	private static BufferedImage scaleImageToFitPanel(BufferedImage src, 
+			Dimension targetDimension) throws IllegalArgumentException {
 
 		if (src == null)
 			throw new IllegalArgumentException("src cannot be null");

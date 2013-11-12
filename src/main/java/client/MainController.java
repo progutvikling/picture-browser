@@ -11,7 +11,7 @@ import client.gui.MainWindow;
  * This class initializes all that is necessary to run the
  * slide show
  * 
- * @author Stian Sandve <stian@sandve.org
+ * @author Stian Sandve <stian@sandve.org>
  *
  */
 
