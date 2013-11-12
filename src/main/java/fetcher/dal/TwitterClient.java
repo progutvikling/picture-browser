@@ -104,7 +104,7 @@ public class TwitterClient implements ITwitterClient {
 	private static String encode64(String input) throws UnsupportedEncodingException {
 		try {
 			BASE64Encoder enc = new BASE64Encoder();
-			return enc.encode(input.getBytes("UTF-8")).replace("\n", "");
+			return enc.encode(input.getBytes("UTF-8")).replace("\n", "").replace("\r", "");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
