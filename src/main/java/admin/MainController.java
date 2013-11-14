@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import server.bll.ImageServer;
-import admin.bll.BlockingPictures;
+import admin.bll.BlockingPicturesController;
 import admin.bll.ManageConfigsController;
 import admin.bll.ManageKeywordsController;
 import admin.gui.MainWindow;
@@ -29,12 +29,13 @@ public class MainController {
 		ManageConfigsController manageConfigs = new ManageConfigsController(
 				StoreFactory.getConfigsStore());
 		
-		BlockingPictures blockingpictures = new BlockingPictures(StoreFactory.getImageStore());
+		BlockingPicturesController blockingpictures = new BlockingPicturesController(
+				StoreFactory.getImageStore());
 		
 		ArrayList<JPanel> panels = new ArrayList<JPanel>();
 		panels.add(manageKeywords.getView());
 		panels.add(manageConfigs.getView());
-		panels.add(blockingpictures);
+		panels.add(blockingpictures.getView());
 		
 		MainWindow wnd = new MainWindow(panels);
 		wnd.setVisible(true);
