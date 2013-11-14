@@ -18,7 +18,7 @@ public class loadInBackground extends SwingWorker<JLabel, JLabel> {
 	private ImageIcon imgIcon;
 	private List<Image> lImages;
 	private IImageStore imagestore;
-	int count2 = 0;
+	int count = 0;
 
 	private BlockingPictures blockPic;
 
@@ -37,9 +37,9 @@ public class loadInBackground extends SwingWorker<JLabel, JLabel> {
 				buffImage = loadImage(lImages.get(i).getUrl());
 				buffImage = resize(buffImage);
 				if (buffImage == null) {
-					count2++;
+					count++;
 					System.out.println("<--Could not resize picture : "
-							+ count2 + "-->");
+							+ count + "-->");
 					continue;
 				}
 				if (buffImage != null) {
