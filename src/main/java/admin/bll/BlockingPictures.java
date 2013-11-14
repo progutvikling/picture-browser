@@ -37,7 +37,7 @@ public class BlockingPictures extends JPanel implements MouseListener {
 	private JPanel picPanel;
 	private loadInBackground loadImage;
 	private int imageLength;
-	private int storeLabel = 0;
+	private int storedLabel = 0;
 	private JLabel temp[];
 	private List<Image> lImagesFromLoad;
 
@@ -76,11 +76,11 @@ public class BlockingPictures extends JPanel implements MouseListener {
 		setPanel();
 		JLabel imageIconLabel = new JLabel();
 		imageIconLabel = l.get(0);
-		temp[storeLabel] = imageIconLabel;
-		temp[storeLabel].addMouseListener(createMouseListener());
-		picPanel.add(temp[storeLabel]);
-		storeLabel++;
-		System.out.println("storelable: " + storeLabel);
+		temp[storedLabel] = imageIconLabel;
+		temp[storedLabel].addMouseListener(createMouseListener());
+		picPanel.add(temp[storedLabel]);
+		storedLabel++;
+		System.out.println("storedlable: " + storedLabel);
 	}
 
 	public void setPanel() {
@@ -96,7 +96,7 @@ public class BlockingPictures extends JPanel implements MouseListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JLabel coverLabel = (JLabel) e.getSource();
-				for (int i = 0; i < storeLabel; i++) {
+				for (int i = 0; i < storedLabel; i++) {
 					if (e.getSource().equals(temp[i])) {
 						if (!coverLabel.isEnabled()) {
 							coverLabel.setEnabled(true);

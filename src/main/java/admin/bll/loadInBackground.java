@@ -38,7 +38,7 @@ public class loadInBackground extends SwingWorker<JLabel, JLabel> {
 				buffImage = resize(buffImage);
 				if (buffImage == null) {
 					count2++;
-					System.out.println("<--Klarte ikke å resize bilet : "
+					System.out.println("<--Could not resize picture : "
 							+ count2 + "-->");
 					continue;
 				}
