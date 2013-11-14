@@ -13,13 +13,13 @@ import java.net.URLConnection;
  *
  */
 
-public class Fetcher {
+public class Fetcher implements IFetcher {
 	
-	public static String fetchImagesFromServer() {
+	public String fetchImagesFromServer() {
 		return httpGet("http://localhost:8000/images");
 	}
 	
-	public static String fetchConfigsFromServer() {
+	public String fetchConfigsFromServer() {
 		return httpGet("http://localhost:8000/configs");
 	}
 	

@@ -22,7 +22,7 @@ public class SlideshowController implements SlideshowHandler {
 	public SlideshowController() {
 		view = new SlideshowPanel();
 		show = new Slideshow(view, this);
-		il = new ImageLoader();
+		il = ImageLoaderFactory.build();
 	}
 
 	@Override
