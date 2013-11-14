@@ -32,11 +32,6 @@ public class ImageLoader implements RefreshListener {
 		this.images = images;
 		this.refresher = refresher;
 		this.refresher.addRefreshListener(this);
-
-		/**
-		 * Manually fetch the images once to ensure that
-		 * users can call getNext() immediately after construction
-		 */
 	}
 
 	public BufferedImage getNext() {
