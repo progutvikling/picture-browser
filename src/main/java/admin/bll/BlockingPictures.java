@@ -65,6 +65,7 @@ public class BlockingPictures extends JPanel implements MouseListener {
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollpane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollpane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollpane.setBounds(getVisibleRect());
 		this.setLayout(new BorderLayout());
 		this.add(scrollpane, BorderLayout.CENTER);
