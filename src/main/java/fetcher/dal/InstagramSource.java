@@ -40,20 +40,20 @@ public class InstagramSource implements IImageSource {
 		long maxIdFetched = -1;
 
 		JsonParser parser = new JsonParser();
-		JsonObject obj = parser.parse(client.search(keyword, 0)).getAsJsonObject();
+		JsonObject obj = parser.parse(client.search(keyword, maxId)).getAsJsonObject();
 		JsonArray jsonPictures = obj.get("data").getAsJsonArray();
                 
+		maxIdFetched = obj.get("pagination").getAsJsonObject().get("next_max_tag_id").getAsLong();
+		
 		for(JsonElement i : jsonPictures) {
 			if (i.isJsonObject()) {
 				JsonObject picture = i.getAsJsonObject();
 
 				long id = 0L;
-				try { 
+				
+				try {
 					id = picture.get("caption").getAsJsonObject().get("id").getAsLong();
-					if (maxIdFetched < id) {
-						maxIdFetched = id;
-					}
-				} catch (IllegalStateException e) {
+				} catch (Exception e) {
 					continue;
 				}
 

@@ -25,6 +25,11 @@ public class MainController {
 	 * Interval between fetches
 	 */
 	private final int INTERVAL = 5;
+	
+	/**
+	 * How many pictures do we need in the database?
+	 */
+	private final int LIMIT = 100;
 
 	/**
 	 * Date format for log output
@@ -59,30 +64,32 @@ public class MainController {
 		IKeywordsStore keywordsStore = StoreFactory.getKeywordsStore();
 		List<String> keywords = keywordsStore.getKeywords();
 		
+		int numImagesForEachKeyword = (int)(LIMIT/keywords.size()/sources.size());
+		
 		while (true) {
 
 			String sourceClass = "";
 			
-				for (IImageSource source : sources) {
-					sourceClass = source.getClass().getName();
-					log("Starting to fetch from " + source.getClass().getName());
+			for (IImageSource source : sources) {
+				sourceClass = source.getClass().getName();
+				log("Starting to fetch from " + source.getClass().getName());
 					
-					try {
+				try {
 					for (String keyword : keywords) {
 						log("Fetching for keyword `" + keyword + "`...");
-						List<Image> images = source.getByKeyword(keyword, 100);
+						List<Image> images = source.getByKeyword(keyword, numImagesForEachKeyword);
 						log("Finished. Got " + images.size() + " images. Inserting them to the database:");
 						for (Image image : images) {
 							imageStore.insert(image);
 						}
-					}
-
-
-					} catch (Exception e) {
-						e.printStackTrace();
-						log("Could not fetch from `" + sourceClass + "`. Trying again in " + INTERVAL + " minutes.");
-					}
 				}
+
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					log("Could not fetch from `" + sourceClass + "`. Trying again in " + INTERVAL + " minutes.");
+				}
+			}
 
 			try {
 				log("Going to sleep for " + INTERVAL + " minutes. (abort with Ctrl+c)");

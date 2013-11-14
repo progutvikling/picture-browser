@@ -17,6 +17,8 @@ import common.dal.Image;
 public class TwitterSource implements IImageSource {
 	ITwitterClient twitter;
 
+	int MAX_QUERIES = 10;
+	
 	private static final SimpleDateFormat twitterDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy", Locale.ENGLISH);
 
 	public TwitterSource(ITwitterClient twitter) {
@@ -29,8 +31,10 @@ public class TwitterSource implements IImageSource {
 
 		// Fetch images until we get 100 or there is no more...
 		long maxIdFetched = 0;
-		while (images.size() < count) {
+		int countQueries = 0;
+		while (images.size() < count && countQueries < MAX_QUERIES) {
 			maxIdFetched = fetchSomeImages(images, keyword, maxIdFetched);
+			countQueries++;
 			if (maxIdFetched == -1) {
 				break;
 			}

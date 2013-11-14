@@ -24,9 +24,14 @@ public class InstagramClient implements IInstagramClient {
 			query = URLEncoder.encode(keyword, "utf-8");
 		} catch (UnsupportedEncodingException e) {
 		}
+		
+		String maxTagId = "";
+		if (maxId > 0) {
+			maxTagId = "max_tag_id=" + maxId;
+		}
 
 		try {
-			URL url = new URL("https://api.instagram.com/v1/tags/" + query + "/media/recent?maxId=" + maxId + "&client_id=" + CLIENTID);
+			URL url = new URL("https://api.instagram.com/v1/tags/" + query + "/media/recent?" + maxTagId + "&client_id=" + CLIENTID);
 			HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.connect();

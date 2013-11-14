@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import common.utils.StringUtils;
 
 /**
@@ -34,7 +37,7 @@ public class ImageStore implements IImageStore {
 		try {
 
 			PreparedStatement statement = conn.prepareStatement(
-				"INSERT IGNORE INTO images " +
+				"INSERT INTO images " +
 				" (url, external_id, description, keyword, created_time)" +
 				" VALUES (?, ?, ?, ?, ?);");
 
@@ -44,6 +47,8 @@ public class ImageStore implements IImageStore {
 			statement.setString(4, img.getKeyword());
 			statement.setString(5, dateformat.format(img.getCreatedTime()));
 			return statement.executeUpdate() == 1;
+		} catch (MySQLIntegrityConstraintViolationException e) {
+			return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
