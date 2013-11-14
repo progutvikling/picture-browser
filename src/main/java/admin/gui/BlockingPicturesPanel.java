@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
 
-import common.dal.IImageStore;
 import common.dal.Image;
 
 public class BlockingPicturesPanel extends JPanel {
