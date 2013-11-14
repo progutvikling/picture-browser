@@ -16,7 +16,7 @@ import client.gui.SlideshowPanel;
 public class SlideshowController implements SlideshowHandler {
 	
 	private SlideshowPanel view;
-	private ImageLoader il;
+	private IImageLoader il;
 	private Slideshow show;
 	
 	public SlideshowController() {

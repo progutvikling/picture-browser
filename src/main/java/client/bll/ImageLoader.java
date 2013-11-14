@@ -18,7 +18,7 @@ import common.dal.Image;
  *
  */
 
-public class ImageLoader implements RefreshListener {
+public class ImageLoader implements RefreshListener, IImageLoader {
 
 	private static final String SLIDESHOW_DELAY_KEY = "slideshow_delay";
 
@@ -34,6 +34,10 @@ public class ImageLoader implements RefreshListener {
 		this.refresher.addRefreshListener(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see client.bll.IImageLoader#getNext()
+	 */
+	@Override
 	public BufferedImage getNext() {
 		if(images == null)
 			return null;
@@ -55,6 +59,10 @@ public class ImageLoader implements RefreshListener {
 		return currentImage;
 	}
 
+	/* (non-Javadoc)
+	 * @see client.bll.IImageLoader#getSlideshowDelay()
+	 */
+	@Override
 	public int getSlideshowDelay() {
 		return slideshowDelay;
 	}

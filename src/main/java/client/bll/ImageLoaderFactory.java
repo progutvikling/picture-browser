@@ -8,14 +8,14 @@ import common.dal.Image;
 
 public class ImageLoaderFactory {
 	
-	public static ImageLoader build() {
+	public static IImageLoader build() {
 		IFetcher fetcher = new Fetcher();
 		String json = fetcher.fetchImagesFromServer();
 		List<Image> images = Image.createImagesFromJson(json);
 		
 		Refresher refresher = new RefreshService(fetcher);
 		
-		ImageLoader loader = new ImageLoader(images, refresher);
+		IImageLoader loader = new ImageLoader(images, refresher);
 		
 		return loader;
 	}
