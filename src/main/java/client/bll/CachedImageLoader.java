@@ -106,6 +106,7 @@ public class CachedImageLoader implements RefreshListener, IImageLoader {
 		images = e.getImages();
 		String delay = (String) e.getConfigs().get(SLIDESHOW_DELAY_KEY);
 		slideshowDelay = Integer.parseInt(delay);
+		preloadImages();
 	}
 
 	private class DownloadImagesTask extends SwingWorker<BufferedImage, Object> {
