@@ -83,20 +83,15 @@ public class CachedImageLoader implements RefreshListener, IImageLoader {
 		URL url = null;
 		try {
 			url = new URL(urlString);
-		} catch (MalformedURLException e1) {
-			System.out.println("malformed url");
-		}
+		} catch (MalformedURLException e1) {}
 		while (bi == null) {
 			try {
 				bi = ImageIO.read(url);
 			} catch (Exception e) {
-				System.out.println("bad url: " + images.get(pos).getUrl());
 				incrementPos();
 				try {
 					url = new URL(images.get(pos).getUrl());
-				} catch (MalformedURLException e1) {
-					e1.printStackTrace();
-				}
+				} catch (MalformedURLException e1) {}
 			}
 		}
 		return bi;
@@ -141,7 +136,6 @@ public class CachedImageLoader implements RefreshListener, IImageLoader {
 			try {
 				bi = ImageIO.read(new URL(url));
 			} catch (Exception e) {
-				System.out.println("wokrer: null");
 				return null;
 			}
 			return bi;
