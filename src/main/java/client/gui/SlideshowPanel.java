@@ -58,7 +58,7 @@ public class SlideshowPanel extends JPanel implements Canvas {
 		if (bi != null)
 			g.drawImage(bi, marginX, marginY, null);
 		else {
-			String loading = "Loading...";
+			String loading = "Laster...";
 			Font f = new Font("Arial", Font.BOLD, 20);
 			g.setColor(Color.WHITE);
 			g.setFont(f);

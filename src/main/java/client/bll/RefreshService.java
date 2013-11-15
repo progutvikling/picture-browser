@@ -19,7 +19,7 @@ import client.dal.IFetcher;
  *
  */
 
-public class RefreshService extends Thread implements Refresher {
+public class RefreshService extends Thread implements Refreshable {
 
 	private static final int INTERVAL = 5;
 	private LinkedList<RefreshListener> refreshListeners = new LinkedList<RefreshListener>();

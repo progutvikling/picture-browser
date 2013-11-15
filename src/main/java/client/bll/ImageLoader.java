@@ -25,10 +25,10 @@ public class ImageLoader implements RefreshListener, IImageLoader {
 	private List<Image> images;
 	private int pos = 0;
 	private BufferedImage nextImage = null;
-	private Refresher refresher;
+	private Refreshable refresher;
 	private int slideshowDelay = 3;
 
-	public ImageLoader(List<Image> images, Refresher refresher) {
+	public ImageLoader(List<Image> images, Refreshable refresher) {
 		this.images = images;
 		this.refresher = refresher;
 		this.refresher.addRefreshListener(this);

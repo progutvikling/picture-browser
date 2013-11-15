@@ -13,9 +13,9 @@ public class ImageLoaderFactory {
 		String json = fetcher.fetchImagesFromServer();
 		List<Image> images = Image.createImagesFromJson(json);
 		
-		Refresher refresher = new RefreshService(fetcher);
+		Refreshable refresher = new RefreshService(fetcher);
 		
-		IImageLoader loader = new ImageLoader(images, refresher);
+		IImageLoader loader = new CachedImageLoader(images, refresher);
 		
 		return loader;
 	}
