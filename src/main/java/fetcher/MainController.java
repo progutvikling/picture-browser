@@ -79,9 +79,15 @@ public class MainController {
 						log("Fetching for keyword `" + keyword + "`...");
 						List<Image> images = source.getByKeyword(keyword, numImagesForEachKeyword);
 						log("Finished. Got " + images.size() + " images. Inserting them to the database:");
+						
+						int count = 0;
 						for (Image image : images) {
-							imageStore.insert(image);
+							if (imageStore.insert(image)) {
+								count++;
+							}
 						}
+						
+						log("Done. Inserted " + count + " images to the database. The others failed or were duplicates.");
 				}
 
 
