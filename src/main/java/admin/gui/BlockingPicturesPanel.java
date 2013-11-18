@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -12,47 +14,44 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
 
 import common.dal.Image;
 
-public class BlockingPicturesPanel extends JPanel {
+public class BlockingPicturesPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -1949002606878636732L;
 
-	private IBlockingPicturesPanelHandler handler = null;	
-	
+	private IBlockingPicturesPanelHandler handler = null;
+
 	private int kol = 4;
 	private JPanel picPanel;
+	private JPanel buttonPanel;
 	private LoadInBackground loadImage;
 	private int imageLength;
 	private int storedLabel = 0;
 	private JLabel temp[];
 	private List<Image> lImagesFromLoad;
-	
-	
+	private int finishedLabel = 0;
+	private boolean doneLoading = false;
+
 	public BlockingPicturesPanel(IBlockingPicturesPanelHandler handler) {
 		this.handler = handler;
-		
-		this.setName("Block");
-		lImagesFromLoad = handler.getImages();
-		picPanel = new JPanel();
-		loadImage = new LoadInBackground();
-		loadImage.execute();
 
-		/**
-		 * Burde ikkje gjør dette sidde eg benytter getLast() også i
-		 * loadInBavkgroun klassen.Dobbelt med bilder. Fant ingen god måte å få
-		 * antall bilder, alltid hentet før klassen var ferdig med å laste
-		 * bilder...
-		 * 
-		 */
-		imageLength = lImagesFromLoad.size();
-		temp = new JLabel[imageLength];
-		
-		
+		this.setName("Block");
+		picPanel = new JPanel();
+		buttonPanel = new JPanel();
+		loadInBackground();
+		getNewLabelSize();
+
+		JButton update = new JButton("Get latest pictures");
+		update.addActionListener(this);
+		buttonPanel.add(update);
+
 		JScrollPane scrollpane = new JScrollPane(picPanel);
 		scrollpane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -62,10 +61,24 @@ public class BlockingPicturesPanel extends JPanel {
 		scrollpane.setBounds(getVisibleRect());
 		this.setLayout(new BorderLayout());
 		this.add(scrollpane, BorderLayout.CENTER);
+		this.add(buttonPanel, BorderLayout.SOUTH);
 		setVisible(true);
-		
+
 	}
-	
+
+	public void getNewLabelSize() {
+		imageLength = lImagesFromLoad.size();
+		temp = new JLabel[imageLength];
+	}
+
+	public void loadInBackground() {
+		picPanel.removeAll();
+		lImagesFromLoad = handler.getImages();
+		loadImage = new LoadInBackground();
+		loadImage.execute();
+
+	}
+
 	public void setLabel(List<JLabel> l) {
 		setPanel();
 		JLabel imageIconLabel = new JLabel();
@@ -73,19 +86,20 @@ public class BlockingPicturesPanel extends JPanel {
 		temp[storedLabel] = imageIconLabel;
 		temp[storedLabel].addMouseListener(new MouseClickListener());
 		picPanel.add(temp[storedLabel]);
+		picPanel.revalidate();
 		storedLabel++;
 		System.out.println("storedlable: " + storedLabel);
 	}
 
+	public void setFinishedLabels() {
+		finishedLabel++;
+	}
+
 	public void setPanel() {
 		lImagesFromLoad = loadImage.getImage();
-		// imageSize = lImagesFromLoad.size();
-		// System.out.println(imageSize);
 		picPanel.setLayout(new GridLayout((imageLength / kol) + 1, kol, 5, 5));
 	}
 
-	
-	
 	private class MouseClickListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -111,8 +125,32 @@ public class BlockingPicturesPanel extends JPanel {
 			}
 		}
 	}
-	
-	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println("Antall bilder:" + lImagesFromLoad.size());
+
+		if (finishedLabel != lImagesFromLoad.size()) {
+			JOptionPane
+					.showMessageDialog(this,
+							"You need to wait to all the pictures are finished loading");
+		}
+
+		else if (finishedLabel == lImagesFromLoad.size()) {
+			doneLoading = true;
+			finishedLabel = 0;
+		}
+
+		if (doneLoading == true) {
+			System.out.println("execute");
+			storedLabel = 0;
+			loadInBackground();
+			getNewLabelSize();
+			doneLoading = false;
+		}
+
+	}
+
 	/**
 	 * Swing worker that downloads the images and puts them into the panel.
 	 */
@@ -122,14 +160,15 @@ public class BlockingPicturesPanel extends JPanel {
 		private ImageIcon imgIcon;
 		private List<Image> lImages;
 		int count = 0;
-	
+
 		protected JLabel doInBackground() throws Exception {
 			ImageLoader();
 			System.out.println("Antall bilder: " + lImages.size());
 			label = new JLabel();
-	
+
 			if (lImages.size() != 0) {
 				for (int i = 0; i < lImages.size(); i++) {
+					setFinishedLabels();
 					buffImage = loadImage(lImages.get(i).getUrl());
 					buffImage = resize(buffImage);
 					if (buffImage == null) {
@@ -142,23 +181,24 @@ public class BlockingPicturesPanel extends JPanel {
 						imgIcon = new ImageIcon(buffImage);
 						label = new JLabel(imgIcon);
 						publish(label);
-	
+
 					}
-	
+
 				}
 			}
 			return label;
 		}
-	
+
 		@Override
 		protected void process(List<JLabel> label) {
 			setLabel(label);
+
 		}
-	
+
 		public List<Image> getImage() {
 			return lImages;
 		}
-	
+
 		private BufferedImage loadImage(String urlString) {
 			BufferedImage bImages = null;
 			try {
@@ -169,14 +209,15 @@ public class BlockingPicturesPanel extends JPanel {
 			}
 			return bImages;
 		}
-	
+
 		public BufferedImage resize(BufferedImage img) {
 			try {
 				int w = img.getWidth();
 				int h = img.getHeight();
 				int newH = 130;
 				int newW = 130;
-				BufferedImage dimg = new BufferedImage(newH, newW, img.getType());
+				BufferedImage dimg = new BufferedImage(newH, newW,
+						img.getType());
 				Graphics2D g = dimg.createGraphics();
 				g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 						RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -187,11 +228,11 @@ public class BlockingPicturesPanel extends JPanel {
 				return null;
 			}
 		}
-	
+
 		public void ImageLoader() {
 			lImages = handler.getImages();
-	
+
 		}
-	
+
 	}
 }
