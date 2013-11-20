@@ -62,18 +62,21 @@ public class MainController {
 
 		IImageStore imageStore = StoreFactory.getImageStore();
 		IKeywordsStore keywordsStore = StoreFactory.getKeywordsStore();
-		List<String> keywords = keywordsStore.getKeywords();
+		List<String> keywords;
 		
-		int numImagesForEachKeyword = (int)(LIMIT/keywords.size()/sources.size());
+		int numImagesForEachKeyword = 0;
 		
 		while (true) {
 
 			String sourceClass = "";
-			
+
+			keywords = keywordsStore.getKeywords();
+			numImagesForEachKeyword = (int)(LIMIT/keywords.size()/sources.size());
+				
 			for (IImageSource source : sources) {
 				sourceClass = source.getClass().getName();
 				log("Starting to fetch from " + source.getClass().getName());
-					
+				
 				try {
 					for (String keyword : keywords) {
 						log("Fetching for keyword `" + keyword + "`...");
