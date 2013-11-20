@@ -44,8 +44,9 @@ public class CachedImageLoader implements RefreshListener, IImageLoader {
 
 	@Override
 	public BufferedImage getNext() {
-		if(images == null)
+		if(images == null){
 			return null;
+		}
 
 		BufferedImage image;
 		Image img = images.get(pos);
@@ -104,9 +105,13 @@ public class CachedImageLoader implements RefreshListener, IImageLoader {
 	@Override
 	public void refreshPerformed(RefreshEvent e) {
 		images = e.getImages();
+		try{
 		String delay = (String) e.getConfigs().get(SLIDESHOW_DELAY_KEY);
 		slideshowDelay = Integer.parseInt(delay);
 		preloadImages();
+		refresher.setdelay(5);
+		}catch(NullPointerException n){
+		}
 	}
 
 	private class DownloadImagesTask extends SwingWorker<BufferedImage, Object> {

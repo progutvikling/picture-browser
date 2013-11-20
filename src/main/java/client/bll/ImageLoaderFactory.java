@@ -11,10 +11,14 @@ public class ImageLoaderFactory {
 	public static IImageLoader build() {
 		IFetcher fetcher = new Fetcher();
 		String json = fetcher.fetchImagesFromServer();
+		
 		List<Image> images = Image.createImagesFromJson(json);
-		
-		Refreshable refresher = new RefreshService(fetcher);
-		
+		Refreshable refresher;
+		if(json.equals("")){
+			 refresher = new RefreshService(fetcher, 0.1);
+		}else{
+			refresher = new RefreshService(fetcher, 5);
+		}
 		IImageLoader loader = new CachedImageLoader(images, refresher);
 		
 		return loader;

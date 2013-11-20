@@ -7,7 +7,7 @@ import client.gui.SlideshowHandler;
 import client.gui.SlideshowPanel;
 
 /**
- * Cotroller class for the slide show
+ * Controller class for the slide show
  * 
  * @author Stian Sandve <stian@sandve.org>
  *

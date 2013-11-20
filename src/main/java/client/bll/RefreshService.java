@@ -21,12 +21,13 @@ import client.dal.IFetcher;
 
 public class RefreshService extends Thread implements Refreshable {
 
-	private static final int INTERVAL = 5;
+	private static double INTERVAL;
 	private LinkedList<RefreshListener> refreshListeners = new LinkedList<RefreshListener>();
 	private IFetcher fetcher;
 
-	public RefreshService(IFetcher fetcher) {
+	public RefreshService(IFetcher fetcher, double delay) {
 		this.fetcher = fetcher;
+		INTERVAL = delay;
 		this.start();
 	}
 
@@ -37,7 +38,9 @@ public class RefreshService extends Thread implements Refreshable {
 			sleep();
 		}
 	}
-
+	public void setdelay(double tempdelay){
+		INTERVAL = tempdelay;
+	}
 	public void refresh() {
 		List<Image> images = fetchImages();
 		Map<String, Object> configs = fetchConfigs();
@@ -57,8 +60,9 @@ public class RefreshService extends Thread implements Refreshable {
 	}
 
 	private void sleep() {
+		int delay = (int)(INTERVAL * 60 * 1000);
 		try {
-			Thread.sleep(INTERVAL * 60 * 1000);
+			Thread.sleep(delay);
 		} catch (InterruptedException e) {}
 	}
 
