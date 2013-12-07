@@ -31,9 +31,9 @@ Komme i gang
 4. Installer mysql: `brew install mysql`
 5. Start mysql: `mysql.server start`
 6. Gå inn i mysql og lag databasen:
+   
    ```bash
    mysql -uroot
-   [...]
    CREATE DATABASE PictureBrowser;
    ```
 
@@ -74,10 +74,12 @@ integrasjonstestene. Du kan unngå det med å legge til
 `-Dmaven.test.skip=true`)
 
 Du har nå laget JAR-filer i `target/`. Du har 4 jar-filer der:
+
 * fetcher (kjører i bakgrunnen, start i kommandolinja om du vil se output)
 * admin
 * server (kjører i bakgrunnen, start i kommandolinja om du vil se output)
 * client (avhengig av at server kjører)
+
 Disse er også avhengige av alle jar-filene i `target/lib` for å kjøre.
 
 
