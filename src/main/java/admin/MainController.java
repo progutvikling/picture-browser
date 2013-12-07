@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import server.bll.ImageServer;
 import admin.bll.BlockingPicturesController;
 import admin.bll.ManageConfigsController;
 import admin.bll.ManageKeywordsController;
@@ -18,10 +17,6 @@ import common.dal.StoreFactory;
  */
 public class MainController {
 	public static void main(String[] args) {
-		
-		ImageServer server = new ImageServer();
-		server.start();
-		
 		ManageKeywordsController manageKeywords = new ManageKeywordsController(
 				StoreFactory.getKeywordsStore(),
 				StoreFactory.getImageStore());

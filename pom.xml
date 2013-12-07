@@ -110,7 +110,6 @@
 							<classifier>admin</classifier>
 							<includes>
 								<include>**/admin/**</include>
-								<include>**/server/**</include>
 								<include>**.properties</include>
 							</includes>
 							<archive>
@@ -120,7 +119,31 @@
 									<mainClass>admin.MainController</mainClass>
 								</manifest>
 								<manifestEntries>
-									<Class-Path>picture-browser-1.0-common-library.jar</Class-Path>
+									<Class-Path>lib/picture-browser-1.0-common-library.jar</Class-Path>
+								</manifestEntries>
+							</archive>
+						</configuration>
+					</execution>
+					<execution>
+						<id>server</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<classifier>server</classifier>
+							<includes>
+								<include>**/server/**</include>
+								<include>**.properties</include>
+							</includes>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<classpathPrefix>lib/</classpathPrefix>
+									<mainClass>server.MainController</mainClass>
+								</manifest>
+								<manifestEntries>
+									<Class-Path>lib/picture-browser-1.0-common-library.jar</Class-Path>
 								</manifestEntries>
 							</archive>
 						</configuration>
@@ -144,7 +167,7 @@
 									<mainClass>client.MainController</mainClass>
 								</manifest>
 								<manifestEntries>
-									<Class-Path>picture-browser-1.0-common-library.jar</Class-Path>
+									<Class-Path>lib/picture-browser-1.0-common-library.jar</Class-Path>
 								</manifestEntries>
 							</archive>
 						</configuration>
@@ -168,7 +191,7 @@
 									<mainClass>fetcher.MainController</mainClass>
 								</manifest>
 								<manifestEntries>
-									<Class-Path>picture-browser-1.0-common-library.jar</Class-Path>
+									<Class-Path>lib/picture-browser-1.0-common-library.jar</Class-Path>
 								</manifestEntries>
 							</archive>
 						</configuration>
