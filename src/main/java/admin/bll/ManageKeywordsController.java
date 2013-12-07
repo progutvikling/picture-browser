@@ -35,7 +35,8 @@ public class ManageKeywordsController implements ManageKeywordsPanelHandler {
 
     @Override
     public boolean deleteKeyword(String keyword) {
-		if (keywordsStore.deleteKeyword(keyword) && imageStore.deleteAllWithKeyword(keyword)) {
+		if (keywordsStore.deleteKeyword(keyword)) {
+			imageStore.deleteAllWithKeyword(keyword);
 			keywords.remove(keyword);
 			return true;
 		}
