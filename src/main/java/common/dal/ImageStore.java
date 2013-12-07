@@ -83,6 +83,8 @@ public class ImageStore implements IImageStore {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException n){
+			
 		}
 		return images;
 	}

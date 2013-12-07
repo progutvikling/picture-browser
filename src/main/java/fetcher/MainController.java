@@ -8,7 +8,6 @@ import common.dal.IImageStore;
 import common.dal.IKeywordsStore;
 import common.dal.Image;
 import common.dal.StoreFactory;
-
 import fetcher.dal.IImageSource;
 import fetcher.dal.InstagramClient;
 import fetcher.dal.InstagramSource;
@@ -62,15 +61,16 @@ public class MainController {
 
 		IImageStore imageStore = StoreFactory.getImageStore();
 		IKeywordsStore keywordsStore = StoreFactory.getKeywordsStore();
-		List<String> keywords;
+		List<String> keywords = new ArrayList<String>();
 		
 		int numImagesForEachKeyword = 0;
 		
 		while (true) {
 
 			String sourceClass = "";
-
+			while(keywords.size()==0){
 			keywords = keywordsStore.getKeywords();
+			}
 			numImagesForEachKeyword = (int)(LIMIT/keywords.size()/sources.size());
 				
 			for (IImageSource source : sources) {

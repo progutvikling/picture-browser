@@ -19,6 +19,9 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -45,7 +48,6 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 	ArrayList<String> keywords = new ArrayList<String>();
 
 	ManageKeywordsPanelHandler handler;
-
 
 	/**
 	 * Sets up the panel and adds action listener to the button
@@ -108,6 +110,9 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 	private class AddKeywordActionListener implements ActionListener {
 		private ManageKeywordsPanel view;
 
+		Locale norwegian = new Locale("no_NO");
+		private ResourceBundle rb = ResourceBundle.getBundle("Strings", norwegian);
+		
 		public AddKeywordActionListener(ManageKeywordsPanel view) {
 			this.view = view;
 		}
@@ -120,6 +125,10 @@ public class ManageKeywordsPanel extends JPanel implements TableModel {
 				if (view.handler.addKeyword(keyword)) {
 					view.keywordTextField.setText("");
 					refreshTable();
+				}else{
+					JOptionPane
+					.showMessageDialog(view,
+					rb.getString("sql_error"), rb.getString("error"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}

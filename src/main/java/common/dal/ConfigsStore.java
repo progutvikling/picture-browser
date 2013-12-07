@@ -47,6 +47,8 @@ public class ConfigsStore implements IConfigsStore {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		} catch (NullPointerException n){
+			return false;
 		}
 	}
 
@@ -73,6 +75,8 @@ public class ConfigsStore implements IConfigsStore {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException n){
+			
 		}
 		return configs;
 	}	

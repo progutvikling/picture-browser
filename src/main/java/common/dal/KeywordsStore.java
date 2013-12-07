@@ -28,6 +28,8 @@ public class KeywordsStore implements IKeywordsStore {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException n){
+			
 		}
 			
 		return keywords;
@@ -40,6 +42,8 @@ public class KeywordsStore implements IKeywordsStore {
 			statement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
+			return false;
+		} catch (NullPointerException n){
 			return false;
 		}
 	}
