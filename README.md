@@ -7,6 +7,16 @@ Arbeidsoppgave i faget Programvareutvikling på UiS Data Bachelor 2013.
 Gruppe 1
 
 
+Kjørbare jars
+-------------
+
+Skulle det være noe problem å følge bruksanvisningen nedenfor for å
+lage kjørbare jars, så finner du programmet i kjørbar form i
+picture-browser-0.1.zip. En demonstrasjon av hvordan det kjøres vises her:
+https://www.dropbox.com/s/mvkwqtmjriz0va2/Demonstrasjon.mov
+
+
+
 Komme i gang
 ------------
 
