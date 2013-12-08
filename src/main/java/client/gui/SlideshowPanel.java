@@ -9,6 +9,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.JPanel;
 
 /**
@@ -26,12 +29,16 @@ public class SlideshowPanel extends JPanel implements Canvas {
 	private int marginX = 0;
 	private int marginY = 0;
 	private Dimension screenSize;
+	private ResourceBundle rb;
 
 	public SlideshowPanel() {
 		//Sets the panels preferred size to be the same as the screens size
 		this.screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
 		this.setPreferredSize(screenSize);
 		this.setBackground(Color.BLACK);
+		
+		Locale norwegian = new Locale("no_NO");
+		this.rb = ResourceBundle.getBundle("Strings", norwegian);
 	}
 
 	/**
@@ -58,7 +65,7 @@ public class SlideshowPanel extends JPanel implements Canvas {
 		if (bi != null)
 			g.drawImage(bi, marginX, marginY, null);
 		else {
-			String loading = "Laster...";
+			String loading = rb.getString("loading");
 			Font f = new Font("Arial", Font.BOLD, 20);
 			g.setColor(Color.WHITE);
 			g.setFont(f);
