@@ -14,7 +14,7 @@ public class ImageLoaderFactory {
 		
 		List<Image> images = Image.createImagesFromJson(json);
 		Refreshable refresher;
-		if(json.equals("")){
+		if(json.equals("")) {
 			 refresher = new RefreshService(fetcher, 0.1);
 		}else{
 			refresher = new RefreshService(fetcher, 5);
