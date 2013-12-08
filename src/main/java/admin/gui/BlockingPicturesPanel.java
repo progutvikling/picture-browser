@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,7 +29,8 @@ public class BlockingPicturesPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -1949002606878636732L;
 
 	private IBlockingPicturesPanelHandler handler = null;
-
+	
+	private ResourceBundle rb;
 	private int kol = 4;
 	private JPanel picPanel;
 	private JPanel buttonPanel;
@@ -40,6 +43,8 @@ public class BlockingPicturesPanel extends JPanel implements ActionListener {
 	private boolean doneLoading = false;
 
 	public BlockingPicturesPanel(IBlockingPicturesPanelHandler handler) {
+		Locale norwegian = new Locale("no_NO");
+		this.rb = ResourceBundle.getBundle("Strings", norwegian);
 		this.handler = handler;
 
 		this.setName("Block");
@@ -133,7 +138,7 @@ public class BlockingPicturesPanel extends JPanel implements ActionListener {
 		if (finishedLabel != lImagesFromLoad.size()) {
 			JOptionPane
 					.showMessageDialog(this,
-							"You need to wait to all the pictures are finished loading");
+							rb.getString("loadpic"));
 		}
 
 		else if (finishedLabel == lImagesFromLoad.size()) {
